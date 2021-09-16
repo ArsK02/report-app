@@ -1,0 +1,4 @@
+// Colors
+export const THEME = {
+    
+}
