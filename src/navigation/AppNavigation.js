@@ -56,8 +56,8 @@ export const MainTabs = () => {
                 //     backgroundColor: activeTheme.BACKGROUND_COLOR
                 // }
                 headerStyle: {
-                    shadowOffset: 0,
-                    elevation: null
+                    shadowOffset: null,
+                    elevation: 0
                 }
             })}
         >
