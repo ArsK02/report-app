@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { HomeStack } from '../screens/home/HomeStack';
-import { StopWatchScreen } from '../screens/StopWatchScreen';
+import { CalendarScreen } from '../screens/CalendarScreen';
 import { SettingsStack } from '../screens/settings/SettingsStack';
 
 const MainStack = createNativeStackNavigator();
@@ -42,8 +42,8 @@ export const MainTabs = () => {
                     let iconName;
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline'
-                    } else if (route.name === 'StopWatch') {
-                        iconName = focused ? 'stopwatch' : 'stopwatch-outline'
+                    } else if (route.name === 'Calendar') {
+                        iconName = focused ? 'calendar' : 'calendar-outline'
                     } else if (route.name === 'Settings') {
                         iconName = focused ? 'settings' : 'settings-outline'
                     } 
@@ -57,7 +57,7 @@ export const MainTabs = () => {
                 // }
                 headerStyle: {
                     shadowOffset: 0,
-                    elevation: 0
+                    elevation: null
                 }
             })}
         >
@@ -67,9 +67,9 @@ export const MainTabs = () => {
                 options={{ headerShown: false }}
             />
             <Tab.Screen
-                name="StopWatch"
-                component={StopWatchScreen}
-                options={{ title: 'StopWatch' }}
+                name="Calendar"
+                component={CalendarScreen}
+                options={{ title: 'Calendar' }}
             />
             <Tab.Screen
                 name="Settings"
