@@ -46,7 +46,7 @@ export const MainTabs = () => {
                         iconName = focused ? 'calendar' : 'calendar-outline'
                     } else if (route.name === 'Settings') {
                         iconName = focused ? 'settings' : 'settings-outline'
-                    } 
+                    }
                     return <Icon name={iconName} size={22} />
                 },
                 tabBarShowLabel: false,
