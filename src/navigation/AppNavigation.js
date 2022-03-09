@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { HomeStack } from '../screens/home/HomeStack';
-import { CalendarScreen } from '../screens/CalendarScreen';
 import { SettingsStack } from '../screens/settings/SettingsStack';
 
 const MainStack = createNativeStackNavigator();
@@ -65,11 +64,6 @@ export const MainTabs = () => {
                 name="Home"
                 component={HomeStack}
                 options={{ headerShown: false }}
-            />
-            <Tab.Screen
-                name="Calendar"
-                component={CalendarScreen}
-                options={{ title: 'Calendar' }}
             />
             <Tab.Screen
                 name="Settings"

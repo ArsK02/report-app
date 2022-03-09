@@ -7,6 +7,7 @@ import { MonthsScroll } from '../../components/MonthsScroll';
 import { MonthSummary } from '../../components/MonthSummary';
 import { StopWatch } from '../../components/StopWatch';
 import { BottomSheetModalComp } from '../../components/BottomSheetModalComp';
+import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
 
 export const HomeScreen = ({ navigation }) => {
     moment.locale('en') 
@@ -24,7 +25,7 @@ export const HomeScreen = ({ navigation }) => {
     }, []);
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScreenSafeAreaContainer>
             <View style={styles.compContainer}>
                 <MonthsScroll selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
             </View>
@@ -35,17 +36,13 @@ export const HomeScreen = ({ navigation }) => {
                 <MonthSummary />
             </View>
 
-            <View style={styles.compContainer}>
-                <StopWatch />
-            </View>
-
             <BottomSheetModalComp
                 innerRef={bottomSheetModalRef}
                 snapPoints={snapPoints}
             >
                 <Text>Bottom Sheet</Text>
             </BottomSheetModalComp>
-        </ScrollView>
+        </ScreenSafeAreaContainer>
     );
 }
 
