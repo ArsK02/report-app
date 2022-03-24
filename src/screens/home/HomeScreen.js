@@ -8,13 +8,14 @@ import { MonthSummary } from '../../components/MonthSummary';
 import { StopWatch } from '../../components/StopWatch';
 import { BottomSheetModalComp } from '../../components/BottomSheetModalComp';
 import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
+import { THEME } from '../../theme';
 
 export const HomeScreen = ({ navigation }) => {
-    moment.locale('en') 
-    const CURRENT_MONTH = moment().month();
+    // moment.locale('en')
+    // const CURRENT_MONTH = moment().month();
 
-    const [selectedMonth, setSelectedMonth] = useState(CURRENT_MONTH);
-    console.log('selectedMonth: ', selectedMonth)
+    // const [selectedMonth, setSelectedMonth] = useState(CURRENT_MONTH);
+    // console.log('selectedMonth: ', selectedMonth)
 
     // BottomSheetModal
     const bottomSheetModalRef = useRef(null);
@@ -25,32 +26,22 @@ export const HomeScreen = ({ navigation }) => {
     }, []);
 
     return (
-        <ScreenSafeAreaContainer>
-            <View style={styles.compContainer}>
-                <MonthsScroll selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
-            </View>
+        <ScreenSafeAreaContainer style={styles.screenContainer} disableSafeAreaEdges={['top', 'bottom']}>
 
-            <Button title='OpenModal' onPress={handlePresentModalPress} />
+        </ScreenSafeAreaContainer>
+    );
+}
 
-            <View style={styles.compContainer}>
-                <MonthSummary />
-            </View>
-
+{/* <Button title='OpenModal' onPress={handlePresentModalPress} />
             <BottomSheetModalComp
                 innerRef={bottomSheetModalRef}
                 snapPoints={snapPoints}
             >
                 <Text>Bottom Sheet</Text>
-            </BottomSheetModalComp>
-        </ScreenSafeAreaContainer>
-    );
-}
+            </BottomSheetModalComp> */}
 
 const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 20
+    screenContainer: {
+        backgroundColor: THEME.SECONDARY_BACKGROUND_COLOR,
     },
-    compContainer: {
-        marginBottom: 25
-    }
 });

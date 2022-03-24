@@ -10,11 +10,9 @@ import { AppNavigation } from './src/navigation/AppNavigation';
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <BottomSheetModalProvider>
           <AppNavigation />
         </BottomSheetModalProvider>
-      </SafeAreaView>
     </Provider>
   );
 }
