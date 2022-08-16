@@ -11,10 +11,10 @@ export async function getAllReports (realm) {
     }
 }
 
-export async function addReport (realm) {
+export async function addReport (realm, title, dateStart, publications, videos, revisit, studies, completed) {
     try {
-        realm.write(() => {
-            realm.create('Report', Report.generate('Hola'));
+        realm.write(async () => {
+            return await realm.create('Report', Report.add(title, dateStart, publications, videos, revisit, studies, completed));
         });
     } catch (e) {
         console.log(e);

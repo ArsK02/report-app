@@ -1,7 +1,6 @@
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import moment from 'moment/min/moment-with-locales';
 import { useDispatch } from 'react-redux';
 import { ReportsRealmContext } from '../../store/reports/models/index';
 import { MonthsScroll } from '../../components/MonthsScroll';
@@ -11,7 +10,8 @@ import { BottomSheetModalComp } from '../../components/BottomSheetModalComp';
 import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
 import { THEME } from '../../theme';
 
-import { doReportsGetAppData } from '../../store/reports/reports.effects';
+import { doReportsGetAppData, doReportsCreate } from '../../store/reports/reports.effects';
+import * as moment from 'moment';
 
 
 const { useRealm } = ReportsRealmContext;
@@ -19,7 +19,9 @@ const { useRealm } = ReportsRealmContext;
 export const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const realm = useRealm();
-    doReportsGetAppData(dispatch, realm, {test: 1});
+    // console.log(+moment.utc());
+    doReportsCreate(dispatch, realm, 'title');
+    // doReportsGetAppData(dispatch, realm, {test: 1});
     // moment.locale('en')
     // const CURRENT_MONTH = moment().month();
 
