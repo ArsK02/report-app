@@ -14,7 +14,8 @@ export const reportsReducer = (state = initialState, action) => {
                 reportsGetAllDataLoaded: false,
                 reportsGetAllDataFail: false
             }
-        case REPORTS_GET_ALL_DATA_LOADING:
+        case REPORTS_GET_ALL_DATA_LOADED:
+            // console.log('reducer reports ->' , action.payload);
             return {
                 ...state,
                 reportsGetAllDataData: action.payload,

@@ -6,13 +6,18 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { AppNavigation } from './src/navigation/AppNavigation';
 
+import { ReportsRealmContext } from './src/store/reports/models/index';
+
+const { RealmProvider } = ReportsRealmContext;
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <RealmProvider>
+      <Provider store={store}>
         <BottomSheetModalProvider>
-          <AppNavigation />
-        </BottomSheetModalProvider>
-    </Provider>
+            <AppNavigation />
+          </BottomSheetModalProvider>
+      </Provider>
+    </RealmProvider>
   );
 }
