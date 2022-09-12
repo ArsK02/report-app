@@ -10,7 +10,7 @@ const MainButton = ({ icon, onPress }) => {
             style={styles.button}
             activeOpacity={0.7}
         >
-            <Icon name={icon || 'checkmark'} size={40} color={THEME.ACCENT_COLOR} />
+            <Icon name={icon || 'checkmark'} size={38} color={THEME.ACCENT_COLOR} />
         </TouchableOpacity>
     )
 }
@@ -19,6 +19,7 @@ export default MainButton
 
 const styles = StyleSheet.create({
     button: {
+        flexGrow: 1,
         height: 54,
         justifyContent: 'center',
         alignItems: 'center',
