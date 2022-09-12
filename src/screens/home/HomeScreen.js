@@ -29,9 +29,8 @@ export const HomeScreen = ({ navigation }) => {
 
     return (
         <ScreenSafeAreaContainer style={styles.screenContainer}>
-            
+            <MounthSlider />
             <ReportForm />
-            <MounthSlider></MounthSlider>
         </ScreenSafeAreaContainer>
     );
 }

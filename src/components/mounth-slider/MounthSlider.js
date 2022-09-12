@@ -4,6 +4,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import { MounthItem } from './MounthItem';
 import moment from "moment";
 import { getMounthData } from './mock/data';
+import YearForm from '../year-form/YearForm';
 
 
 
@@ -14,6 +15,7 @@ export const MounthSlider = (props) => {
     console.log(data);
     return (
         <View style={{ flex: 1 }}>
+            <YearForm />
             <Carousel
                 loop={false}
                 width={width * 0.85}
