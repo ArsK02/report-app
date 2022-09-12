@@ -4,7 +4,7 @@ import { BottomSheetModal, BottomSheetBackdrop, BottomSheetScrollView } from '@g
 
 import { THEME } from '../theme';
 
-export const BottomSheetModalComp = ({ innerRef, snapPoints, children }) => {
+export const BottomSheetModalComp = ({ innerRef, snapPoints, containerStyle, children }) => {
     const renderBackdrop = useCallback(
         props => <BottomSheetBackdrop disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior='close' opacity={0.4} {...props} />,
         [],
@@ -20,7 +20,7 @@ export const BottomSheetModalComp = ({ innerRef, snapPoints, children }) => {
             enablePanDownToClose
             backdropComponent={renderBackdrop}
         >
-            <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
+            <BottomSheetScrollView contentContainerStyle={[styles.contentContainer, containerStyle]}>
                 {children}
             </BottomSheetScrollView>
         </BottomSheetModal>
