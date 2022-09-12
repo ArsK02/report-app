@@ -9,9 +9,10 @@ import { StopWatch } from '../../components/StopWatch';
 import { BottomSheetModalComp } from '../../components/BottomSheetModalComp';
 import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
 import { THEME } from '../../theme';
-
 import { doReportsGetAppData, doReportsCreate } from '../../store/reports/reports.effects';
 import * as moment from 'moment';
+
+import { MounthSlider } from '../../components/mounth-slider/MounthSlider';
 
 
 const { useRealm } = ReportsRealmContext;
@@ -37,8 +38,8 @@ export const HomeScreen = ({ navigation }) => {
     }, []);
 
     return (
-        <ScreenSafeAreaContainer style={styles.screenContainer} disableSafeAreaEdges={['top', 'bottom']}>
-
+        <ScreenSafeAreaContainer style={styles.screenContainer}>
+            <MounthSlider></MounthSlider>
         </ScreenSafeAreaContainer>
     );
 }
