@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useRef } from 'react'
 import { BottomSheetModalComp } from '../BottomSheetModalComp';
 import AddReportButton from '../buttons/AddReportButton';
 import MainButton from '../buttons/MainButton';
+import StopWatchButton from '../buttons/StopWatchButton';
 
 const ReportForm = ({ }) => {
 
@@ -26,7 +27,8 @@ const ReportForm = ({ }) => {
                 <View>
                     <Text>Bottom Sheet</Text>
                 </View>
-                <View>
+                <View style={styles.sheetButtonsContainer}>
+                    <StopWatchButton buttonStyle={styles.stopWatchButton} />
                     <MainButton />
                 </View>
             </BottomSheetModalComp>
@@ -42,5 +44,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 24,
         paddingBottom: 45,
+    },
+    sheetButtonsContainer: {
+        flexDirection: 'row',
+    },
+    stopWatchButton: {
+        marginRight: 15,
     },
 })
