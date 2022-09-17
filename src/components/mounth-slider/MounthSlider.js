@@ -9,7 +9,7 @@ import YearForm from '../year-form/YearForm';
 
 
 
-export const MounthSlider = (props) => {
+export const MounthSlider = ({ navigation }) => {
     const width = Dimensions.get('window').width;
     const data = getMounthData();
     console.log(data);
@@ -26,7 +26,7 @@ export const MounthSlider = (props) => {
                 defaultIndex={moment().month()}
                 scrollAnimationDuration={1000}
                 onSnapToItem={(index) => console.log('current index:', index)}
-                renderItem={({ index }) => <MounthItem index={index} data={data[index]}></MounthItem>}
+                renderItem={({ index }) => <MounthItem index={index} data={data[index]} navigation={navigation}></MounthItem>}
             />
         </View>
     )
