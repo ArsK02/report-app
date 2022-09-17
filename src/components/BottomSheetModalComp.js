@@ -29,6 +29,7 @@ export const BottomSheetModalComp = ({ innerRef, snapPoints, containerStyle, chi
 
 const styles = StyleSheet.create({
     contentContainer: {
+        flexGrow: 1,
         paddingVertical: 20
     },
 });
