@@ -5,11 +5,12 @@ import { useDispatch } from 'react-redux';
 import { ReportsRealmContext } from '../../store/reports/models/index';
 import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
 import { THEME } from '../../theme';
-
 import { doReportsGetAppData, doReportsCreate } from '../../store/reports/reports.effects';
 import * as moment from 'moment';
 import AddReportButton from '../../components/buttons/AddReportButton';
 import ReportForm from '../../components/report-form/ReportForm';
+
+import { MounthSlider } from '../../components/mounth-slider/MounthSlider';
 
 
 const { useRealm } = ReportsRealmContext;
@@ -28,7 +29,7 @@ export const HomeScreen = ({ navigation }) => {
 
     return (
         <ScreenSafeAreaContainer style={styles.screenContainer}>
-            
+            <MounthSlider navigation={navigation}/>
             <ReportForm />
         </ScreenSafeAreaContainer>
     );

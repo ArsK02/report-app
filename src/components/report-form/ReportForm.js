@@ -15,6 +15,7 @@ const ReportForm = ({ }) => {
     const snapPoints = useMemo(() => ['85%'], []);
 
     const handlePresentModalPress = useCallback(() => {
+        console.log('123');
         bottomSheetModalRef.current?.present();
     }, []);
 
