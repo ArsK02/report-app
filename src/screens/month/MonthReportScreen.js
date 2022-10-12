@@ -22,55 +22,6 @@ export const MonthReportScreen = ({ route, navigation }) => {
     const reportsGetByMonthLoading = useSelector(state => state.reports.reportsGetByMonthLoading);
     const reportsGetByMonthLoaded = useSelector(state => state.reports.reportsGetByMonthLoaded);
 
-    const DATA = [
-        {
-            id: 0,
-            date: '28 de septiembre',
-            items: [
-                {
-                    id: 0,
-                    title: 'Predico con Alex'
-                },
-                {
-                    id: 1,
-                    title: 'Predico con Laura'
-                }
-            ]
-        },
-        {
-            id: 1,
-            date: '11 de septiembre',
-            items: [
-                {
-                    id: 0,
-                    title: 'Salida con la congregacion'
-                }
-            ]
-        },
-        {
-            id: 2,
-            date: '7 de septiembre',
-            items: [
-                {
-                    id: 0,
-                    title: 'Predico con Steven'
-                },
-                {
-                    id: 1,
-                    title: 'Por la calle'
-                },
-                {
-                    id: 2,
-                    title: 'Estudio'
-                },
-                {
-                    id: 3,
-                    title: '2 horas'
-                }
-            ]
-        }
-    ]
-
     useEffect(() => {
         doReportsGetByMonth(dispatch, realm, { year: year, month: month});
     }, []);
@@ -94,7 +45,7 @@ export const MonthReportScreen = ({ route, navigation }) => {
                 <FlatList
                     data={reportsGetByMonthData.data || []}
                     ListHeaderComponent={() => <MonthReportHeader month={reportsGetByMonthData.month}/>}
-                    renderItem={({item}) => <MonthReportItem item={item}/>}
+                    renderItem={({item}) => <MonthReportItem key={item.day} item={item}/>}
                     keyExtractor={item => item.day}
                     key={item => item.day}
                 />

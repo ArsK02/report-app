@@ -13,18 +13,30 @@ export const MonthSlider = ({ navigation }) => {
     const width = Dimensions.get('window').width;
     const data = getMonthData();
 
-    const [year, setYear] = useState(moment().year());
-    // console.log(data);
-
-    const getMonths = () => {
+    const getMonths = (year) => {
         const months = [];
-        for (let i = 0; i < moment().month() + 1; i++) {
-            months.push(moment().month() - i)
+        if (year == moment().year()) {
+            for (let i = 0; i < moment().month() + 1; i++) {
+                months.push(moment().month() - i)
+            }
+        } else {
+            for (let i = 0; i < 12; i++) {
+                months.push(moment().month() - i)
+            }
         }
+        
         return months;
     }
 
-    console.log(getMonths());
+    const [year, setYear] = useState(moment().year());
+    const [months, setMonths] = useState(getMonths(year));
+    const [defaultIndex, setDefaultIndex] = useState(moment().month());
+    
+    // console.log(data);
+    useEffect(() => {
+        setMonths(getMonths(year));
+        setDefaultIndex(getMonths(year).length - 1)
+    }, [year]);
     
     return (
         <View style={{ flex: 1 }}>
@@ -34,9 +46,9 @@ export const MonthSlider = ({ navigation }) => {
                 width={width * 0.85}
                 height={400}
                 autoPlay={false}
-                data={getMonths()}
+                data={months}
                 style={styles.carousel}
-                defaultIndex={moment().month()}
+                defaultIndex={defaultIndex}
                 scrollAnimationDuration={1000}
                 onSnapToItem={(index) => console.log('current index:', index)}
                 renderItem={({ index }) => <MonthItem year={year} month={index} navigation={navigation}></MonthItem>}

@@ -7,7 +7,10 @@ import {
     reportsGetByMonthFailAction,
     reportsCreateLoadingAction,
     reportsCreateLoadedAction,
-    reportsCreateFailAction
+    reportsCreateFailAction,
+    reportsGetMinYearLoadingAction,
+    reportsGetMinYearLoadedAction,
+    reportsGetMinYeareFailAction
 } from './reports.actions';
 
 import { Realm } from "@realm/react";
@@ -43,5 +46,15 @@ export async function doReportsCreate(dispatch, realm, params) {
         dispatch(reportsCreateLoadedAction(newReport));
     } catch (err) {
         dispatch(reportsCreateFailAction(err))
+    }
+}
+
+export async function doReportsGetMinYear(dispatch, realm) {
+    try {
+        dispatch(reportsGetMinYearLoadingAction({}));
+        const year = await ReportsService.getMinYear(realm);
+        dispatch(reportsGetMinYearLoadedAction(year));
+    } catch (err) {
+        dispatch(reportsGetMinYeareFailAction(err))
     }
 }

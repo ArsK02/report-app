@@ -5,7 +5,6 @@ export const ReportSchema = yup.object().shape({
         .string(),
     date: yup
         .date()
-        .max(new Date())
         .required(),
     hours: yup
         .number()

@@ -61,3 +61,23 @@ export async function addReport (realm, params) {
         console.log(e);
     }
 }
+
+export async function getMinYear (realm) {
+    try {
+        const years = [];
+        const reports = await realm.objects("Report").sorted('date');
+        if (reports.length > 0) {
+            const year = moment().year();
+            const minYear = new Date(reports[0].date).getFullYear();
+            for (let index = 0; index < (year - minYear) + 1; index++) {
+                years.push(year - index);
+            }
+        } else {
+            years.push(moment().year())
+        }
+        return years;
+    } catch (e) {
+        console.log(e);
+    }
+}
+

@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 export const MonthReportItem = ({ item }) => {
-    console.log('ITEMEE ---------------------->', item);
     return (
         <View
             style={styles.container}

@@ -41,7 +41,10 @@ const ReportForm = ({ }) => {
         validationSchema: ReportSchema,
         initialValues: { title: '', date: new Date().toISOString(), hours: 0, minutes: 0, publications: 0, videos: 0, returnVisits: 0, bibleStudies: 0 },
         onSubmit: values => {
-            doReportsCreate(dispatch, realm, values);
+            const now = new Date();
+            if (now.getTime() >= new Date(values.date).getTime()) {
+                doReportsCreate(dispatch, realm, values);
+            }
         }
     });
 
@@ -58,6 +61,7 @@ const ReportForm = ({ }) => {
     const snapPoints = useMemo(() => ['85%'], []);
 
     const handlePresentModalPress = useCallback(() => {
+        ReportSchema.fields.date.max(new Date())
         setFieldValue('date', new Date().toISOString());
         bottomSheetModalRef.current?.present();
     }, []);
