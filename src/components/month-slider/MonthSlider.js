@@ -5,13 +5,23 @@ import { MonthItem } from './MonthItem';
 import moment from "moment";
 import { getMonthData } from './mock/data';
 import YearForm from '../year-form/YearForm';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { ReportsRealmContext } from '../../store/reports/models/index';
 
+import { doReportsGetStatsByYear } from '../../store/reports/reports.effects';
+
+const { useRealm } = ReportsRealmContext;
 
 
 export const MonthSlider = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const realm = useRealm();
+
     const width = Dimensions.get('window').width;
     const data = getMonthData();
+
+    const reportsCreateLoaded = useSelector(state => state.reports.reportsCreateLoaded);
 
     const getMonths = (year) => {
         const months = [];
@@ -31,12 +41,19 @@ export const MonthSlider = ({ navigation }) => {
     const [year, setYear] = useState(moment().year());
     const [months, setMonths] = useState(getMonths(year));
     const [defaultIndex, setDefaultIndex] = useState(moment().month());
-    
+
     // console.log(data);
     useEffect(() => {
+        doReportsGetStatsByYear(dispatch, realm, year);
         setMonths(getMonths(year));
         setDefaultIndex(getMonths(year).length - 1)
     }, [year]);
+
+    useEffect(() => {
+        if (reportsCreateLoaded) {
+            doReportsGetStatsByYear(dispatch, realm, year);
+        }
+    }, [reportsCreateLoaded])
     
     return (
         <View style={{ flex: 1 }}>

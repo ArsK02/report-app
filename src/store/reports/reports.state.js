@@ -17,5 +17,10 @@ export const reportsState = {
     reportsGetMinYearData: null,
     reportsGetMinYearLoading: false,
     reportsGetMinYearLoaded: false,
-    reportsGetMinYearFail: false
+    reportsGetMinYearFail: false,
+
+    reportsGetStatsByYearData: null,
+    reportsGetStatsByYearLoading: false,
+    reportsGetStatsByYearLoaded: false,
+    reportsGetStatsByYearFail: false
 }

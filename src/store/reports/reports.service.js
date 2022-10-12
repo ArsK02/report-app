@@ -23,7 +23,6 @@ export async function getAllReportsByMonth(realm, params) {
         const daysInMonth = moment({ year: params.year, month: params.month}).daysInMonth();
 
         const reports = await realm.objects("Report").sorted('date');
-        console.log(reports);
 
         
         for (let i = 0; i < daysInMonth; i++) {
@@ -80,4 +79,75 @@ export async function getMinYear (realm) {
         console.log(e);
     }
 }
+
+export async function getStatsByYear (realm, year) {
+    try {
+        const stats = {
+            year: year,
+            data: []
+        };
+        const monthInYear = 11;
+
+        const reports = await realm.objects("Report").sorted('date');
+
+        for (let index = 0; index < monthInYear + 1; index++) {
+            const month = index;
+            const start = new Date(year, month, 1, 1, 0, 0);
+            const end = new Date(year, month + 1, 1, 0, 0, 0);
+
+            const r = reports.filter(elem => {
+                const d = new Date(elem.date);
+                return d.getTime() >= start.getTime() && d.getTime() <= end.getTime();
+            })
+
+
+            if (r.length > 0) {
+                let statHours = 0;
+                let statMinutes = 0;
+                let statPublications = 0;
+                let statVideos = 0;
+                let statReturnVisits = 0;
+                let statbibleStudies = 0;
+                r.forEach(elem => {
+                    statHours = statHours + elem.hours;
+                    statMinutes = statMinutes + elem.minutes;
+                    statPublications = statPublications + elem.publications;
+                    statVideos = statVideos + elem.videos;
+                    statReturnVisits = statReturnVisits + elem.returnVisits;
+
+                    if (elem.bibleStudies > statbibleStudies) {
+                        statbibleStudies = elem.bibleStudies;
+                    }
+                });
+
+                if (statMinutes >= 60) {
+                    statHours = statHours + Math.trunc(statMinutes / 60);
+                    statMinutes = statMinutes % 60;
+                }
+
+                stats.data.push({
+                    year: year,
+                    month: month,
+                    start: start,
+                    end: end,
+                    data: r,
+                    stats: {
+                        hours: statHours,
+                        minutes: statMinutes,
+                        publications: statPublications,
+                        videos: statVideos,
+                        returnVisits: statReturnVisits,
+                        bibleStudies: statbibleStudies,
+                    }
+                })
+            }
+        }
+        console.log('stats service ------------------------------------------>', stats);
+        console.log('---------------------------------------------------------------------');
+        return stats;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 

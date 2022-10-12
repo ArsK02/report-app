@@ -10,7 +10,10 @@ import {
     REPORTS_CREATE_FAIL,
     REPORTS_GET_MIN_YEAR_LOADING,
     REPORTS_GET_MIN_YEAR_LOADED,
-    REPORTS_GET_MIN_YEAR_FAIL
+    REPORTS_GET_MIN_YEAR_FAIL,
+    REPORST_GET_STATS_BY_YEAR_LOADING,
+    REPORST_GET_STATS_BY_YEAR_LOADED,
+    REPORST_GET_STATS_BY_YEAR_FAIL
 } from './reports.types';
 
 export function reportsGetAllDataLoadingAction(data) {
@@ -87,6 +90,25 @@ export function reportsGetMinYearLoadedAction(data) {
 export function reportsGetMinYeareFailAction(data) {
     return {
         type: REPORTS_GET_MIN_YEAR_FAIL,
+        payload: data
+    }
+}
+
+export function reportsGetStatsByYearLoadingAction(data) {
+    return {
+        type: REPORST_GET_STATS_BY_YEAR_LOADING,
+        payload: data
+    }
+}
+export function reportsGetStatsByYearLoadedAction(data) {
+    return {
+        type: REPORST_GET_STATS_BY_YEAR_LOADED,
+        payload: data
+    }
+}
+export function reportsGetStatsByYearFailAction(data) {
+    return {
+        type: REPORST_GET_STATS_BY_YEAR_FAIL,
         payload: data
     }
 }

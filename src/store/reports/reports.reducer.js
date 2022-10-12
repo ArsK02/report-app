@@ -11,7 +11,10 @@ import {
     REPORTS_CREATE_FAIL,
     REPORTS_GET_MIN_YEAR_LOADING,
     REPORTS_GET_MIN_YEAR_LOADED,
-    REPORTS_GET_MIN_YEAR_FAIL
+    REPORTS_GET_MIN_YEAR_FAIL,
+    REPORST_GET_STATS_BY_YEAR_LOADING,
+    REPORST_GET_STATS_BY_YEAR_LOADED,
+    REPORST_GET_STATS_BY_YEAR_FAIL
 } from './reports.types';
 
 export const reportsReducer = (state = initialState, action) => {
@@ -110,6 +113,30 @@ export const reportsReducer = (state = initialState, action) => {
                 reportsGetMinYearLoading: false,
                 reportsGetMinYearLoaded: false,
                 reportsGetMinYearFail: true
+            }
+
+        case REPORST_GET_STATS_BY_YEAR_LOADING:
+            return {
+                ...state,
+                reportsGetStatsByYearLoading: true,
+                reportsGetStatsByYearLoaded: false,
+                reportsGetStatsByYearFail: false
+            }
+        case REPORST_GET_STATS_BY_YEAR_LOADED:
+            // console.log('reducer reports ->' , action.payload);
+            return {
+                ...state,
+                reportsGetStatsByYearData: action.payload,
+                reportsGetStatsByYearLoading: false,
+                reportsGetStatsByYearLoaded: true,
+                reportsGetStatsByYearFail: false
+            }
+        case REPORST_GET_STATS_BY_YEAR_FAIL:
+            return {
+                ...state,
+                reportsGetStatsByYearLoading: false,
+                reportsGetStatsByYearLoaded: false,
+                reportsGetStatsByYearFail: true
             }
         default:
             return state;
