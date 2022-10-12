@@ -5,12 +5,21 @@ export const ReportSchema = yup.object().shape({
         .string(),
     date: yup
         .date()
+        .max(new Date())
         .required(),
     hours: yup
-        .number(),
+        .number()
+        .min(0)
+        .required()
+        .when('minutes', {
+            is: minutes => minutes == 0,
+            then: yup.number().min(1)
+        }),
     minutes: yup
         .number()
-        .max(55),
+        .min(0)
+        .max(59)
+        .required(),
     publications: yup
         .number(),
     videos: yup

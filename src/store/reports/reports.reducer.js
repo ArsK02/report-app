@@ -3,6 +3,9 @@ import {
     REPORTS_GET_ALL_DATA_LOADING,
     REPORTS_GET_ALL_DATA_LOADED,
     REPORTS_GET_ALL_DATA_FAIL,
+    REPORTS_GET_BY_MONTH_LOADING,
+    REPORTS_GET_BY_MONTH_LOADED,
+    REPORTS_GET_BY_MONTH_FAIL,
     REPORTS_CREATE_LOADING,
     REPORTS_CREATE_LOADED,
     REPORTS_CREATE_FAIL
@@ -33,6 +36,31 @@ export const reportsReducer = (state = initialState, action) => {
                 reportsGetAllDataLoaded: false,
                 reportsGetAllDataFail: true
             }
+
+        case REPORTS_GET_BY_MONTH_LOADING:
+            return {
+                ...state,
+                reportsGetByMonthLoading: true,
+                reportsGetByMonthLoaded: false,
+                reportsGetByMonthFail: false
+            }
+        case REPORTS_GET_BY_MONTH_LOADED:
+            // console.log('reducer reports ->' , action.payload);
+            return {
+                ...state,
+                reportsGetByMonthData: action.payload,
+                reportsGetByMonthLoading: false,
+                reportsGetByMonthLoaded: true,
+                reportsGetByMonthFail: false
+            }
+        case REPORTS_GET_BY_MONTH_FAIL:
+            return {
+                ...state,
+                reportsGetByMonthLoading: false,
+                reportsGetByMonthLoaded: false,
+                reportsGetByMonthFail: true
+            }
+
         case REPORTS_CREATE_LOADING:
             return {
                 ...state,

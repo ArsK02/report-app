@@ -10,7 +10,7 @@ import * as moment from 'moment';
 import AddReportButton from '../../components/buttons/AddReportButton';
 import ReportForm from '../../components/report-form/ReportForm';
 
-import { MounthSlider } from '../../components/mounth-slider/MounthSlider';
+import { MonthSlider } from '../../components/month-slider/MonthSlider';
 
 
 const { useRealm } = ReportsRealmContext;
@@ -19,7 +19,7 @@ export const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const realm = useRealm();
     // console.log(+moment.utc());
-    doReportsCreate(dispatch, realm, 'title');
+    // doReportsCreate(dispatch, realm, 'title');
     // doReportsGetAppData(dispatch, realm, {test: 1});
     // moment.locale('en')
     // const CURRENT_MONTH = moment().month();
@@ -29,7 +29,7 @@ export const HomeScreen = ({ navigation }) => {
 
     return (
         <ScreenSafeAreaContainer style={styles.screenContainer}>
-            <MounthSlider navigation={navigation}/>
+            <MonthSlider navigation={navigation}/>
             <ReportForm />
         </ScreenSafeAreaContainer>
     );

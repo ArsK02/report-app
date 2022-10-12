@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFormik } from 'formik';
 import moment from 'moment/min/moment-with-locales';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReportsRealmContext } from '../../store/reports/models/index';
+import { doReportsGetAppData, doReportsCreate } from '../../store/reports/reports.effects';
 
 import { BottomSheetModalComp } from '../BottomSheetModalComp';
 import AddReportButton from '../buttons/AddReportButton';
@@ -10,10 +13,20 @@ import MainButton from '../buttons/MainButton';
 import StopWatchButton from '../buttons/StopWatchButton';
 import { THEME } from '../../theme';
 import { ReportSchema } from '../form-validation/validation';
+import DatePicker from 'react-native-date-picker'
+
+const { useRealm } = ReportsRealmContext;
 
 const ReportForm = ({ }) => {
-    moment.locale('en')
+    const dispatch = useDispatch();
+    const realm = useRealm();
 
+    const [datePicker, setDatePicker] = useState(new Date())
+    const [openPicker, setOpenPicker] = useState(false)
+
+    const reportsCreateData = useSelector(state => state.reports.reportsCreateData);
+    const reportsCreateLoading = useSelector(state => state.reports.reportsCreateLoading);
+    const reportsCreateLoaded = useSelector(state => state.reports.reportsCreateLoaded); 
     // FORM
     const {
         handleChange,
@@ -26,21 +39,26 @@ const ReportForm = ({ }) => {
         isValid
     } = useFormik({
         validationSchema: ReportSchema,
-        initialValues: { title: '', date: moment().format('DD MMMM'), hours: 0, minutes: 0, publications: 0, videos: 0, returnVisits: 0, bibleStudies: 0 },
+        initialValues: { title: '', date: new Date().toISOString(), hours: 0, minutes: 0, publications: 0, videos: 0, returnVisits: 0, bibleStudies: 0 },
         onSubmit: values => {
-            console.log('Form values: ', values);
+            doReportsCreate(dispatch, realm, values);
         }
     });
 
+
     useEffect(() => {
-        console.log('values -> ', values)
-    }, [values]);
+        if (reportsCreateLoaded) {
+            // form restore
+            bottomSheetModalRef.current.close();
+        }
+    }, [reportsCreateLoaded])
 
     // BottomSheetModal
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useMemo(() => ['85%'], []);
 
     const handlePresentModalPress = useCallback(() => {
+        setFieldValue('date', new Date().toISOString());
         bottomSheetModalRef.current?.present();
     }, []);
 
@@ -56,12 +74,12 @@ const ReportForm = ({ }) => {
                         <Icon name='remove' size={26} color={!value ? THEME.SECONDARY_TEXT_COLOR : THEME.CONTRAST_COLOR} />
                     </TouchableOpacity>
                     <Text style={[styles.reportFormItemText, styles.reportFormItemTextMarginH]}>{value || '0'}</Text>
-                    <TouchableOpacity onPress={() => onChange(minutes ? value+5 : value+1)} activeOpacity={0.7} disabled={error}>
-                        <Icon name='add' size={26} color={error ? THEME.SECONDARY_TEXT_COLOR : THEME.CONTRAST_COLOR} />
+                    <TouchableOpacity onPress={() => onChange(minutes ? value+5 : value+1)} activeOpacity={0.7} >
+                        <Icon name='add' size={26} />
                     </TouchableOpacity>
                 </View>
                 :
-                <TouchableOpacity style={[styles.reportFormItem, marginB && styles.reportFormItemMargin]} activeOpacity={0.7}>
+                <TouchableOpacity onPress={() => setOpenPicker(true)} style={[styles.reportFormItem, marginB && styles.reportFormItemMargin]} activeOpacity={0.7}>
                     <Icon name='calendar-outline' size={24} color={THEME.CONTRAST_COLOR} />
                     <Text style={[styles.reportFormItemText, styles.reportFormItemTextGrow]}>Día</Text>
                     <Text style={{ fontSize: 18, lineHeight: 22 }}>{value || ''}</Text>
@@ -140,9 +158,23 @@ const ReportForm = ({ }) => {
                 </View>
                 <View style={styles.sheetButtonsContainer}>
                     <StopWatchButton buttonStyle={styles.stopWatchButton} />
-                    <MainButton />
+                    <MainButton onPress={handleSubmit}/>
                 </View>
             </BottomSheetModalComp>
+            <DatePicker
+                modal
+                mode={"date"}
+                open={openPicker}
+                date={datePicker}
+                onConfirm={(date) => {
+                    setOpenPicker(false)
+                    setDatePicker(date)
+                    setFieldValue('date', date.toISOString());
+                }}
+                onCancel={() => {
+                    setOpenPicker(false)
+                }}
+            />
         </>
     )
 }

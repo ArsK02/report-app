@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Dimensions, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 
-export const MounthReportHeader = ({title}) => {
+export const MonthReportHeader = ({month}) => {
     return (
         <View
             style={styles.container}
         >
-            <Text style={styles.text}>{title}</Text>
+            <Text style={styles.text}>{month}</Text>
         </View>
     )
 }

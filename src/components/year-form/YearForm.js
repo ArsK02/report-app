@@ -1,27 +1,43 @@
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { BottomSheetModalComp } from '../BottomSheetModalComp';
 import SelectYearButton from '../buttons/SelectYearButton';
 import MainButton from '../buttons/MainButton';
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
+import moment from "moment";
 
-const CITIES = ['2022', '2021', '2020', '2019', '2018', '2017'];
+// const MONTHS = [2022, 2021, '2020', '2019', '2018', '2017'];
 
-const YearForm = ({ }) => {
+const YearForm = (props) => {
+    const { year, setYear } = props;
 
+    const [ yearPicked, setYearPicked ] = useState(year);
+    
     // BottomSheetModal
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useMemo(() => [440], []);
     const width = Dimensions.get('window').width;
 
     const handlePresentModalPress = useCallback(() => {
-        console.log('123');
         bottomSheetModalRef.current?.present();
     }, []);
 
+    const handleMainButtonPress = () => {
+        setYear(yearPicked);
+        bottomSheetModalRef.current?.close();
+    }
+
+    const getYears = () => {
+        const years = [];
+        for (let i = 0; i < 8; i++) {
+            years.push(moment().year() - i)
+        }
+        return years;
+    }
+
     return (
         <>
-            <SelectYearButton onPress={handlePresentModalPress} />
+            <SelectYearButton year={year} onPress={handlePresentModalPress} />
             <BottomSheetModalComp
                 innerRef={bottomSheetModalRef}
                 snapPoints={snapPoints}
@@ -31,12 +47,13 @@ const YearForm = ({ }) => {
                     <WheelPickerExpo
                         height={280}
                         width={width - 50}
-                        initialSelectedIndex={3}
-                        items={CITIES.map(name => ({ label: name, value: '' }))}
-                        onChange={({ item }) => console.log(item.label)} />
+                        initialSelectedIndex={getYears().indexOf(year)}
+                        items={getYears().map(name => ({ label: name, value: '' }))}
+                        onChange={({ item }) => setYearPicked(item.label)}
+                        />
                 </View>
                 <View>
-                    <MainButton />
+                    <MainButton onPress={handleMainButtonPress} />
                 </View>
             </BottomSheetModalComp>
         </>

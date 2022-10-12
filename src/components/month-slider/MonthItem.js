@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Dimensions, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const MounthItem = (props) => {
-    const { index, data, navigation } = props;
-    console.log(data);
+export const MonthItem = (props) => {
+    const { year, month, navigation } = props;
     const width = Dimensions.get('window').width;
 
     const onPressToShare = () => {
@@ -12,7 +11,7 @@ export const MounthItem = (props) => {
     }
 
     const onPressToMounthNavigate = () => {
-        navigation.navigate('MounthReportScreen');
+        navigation.navigate('MonthReportScreen', { year: year, month: month });
     }
     return (
         <TouchableOpacity
@@ -21,7 +20,7 @@ export const MounthItem = (props) => {
         >
             <View style={styles.item}>
                 <Text style={styles.title}>
-                    {data.title}
+                    {month}
                 </Text>
                 <View style={styles.containerLine}>
                     <View style={styles.firstLine} />

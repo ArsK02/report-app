@@ -4,6 +4,11 @@ export const reportsState = {
     reportsGetAllDataLoaded: false,
     reportsGetAllDataFail: false,
 
+    reportsGetByMonthData: null,
+    reportsGetByMonthLoading: false,
+    reportsGetByMonthLoaded: false,
+    reportsGetByMonthFail: false,
+
     reportsCreateData: null,
     reportsCreateLoading: false,
     reportsCreateLoaded: false,

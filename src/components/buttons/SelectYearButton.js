@@ -5,7 +5,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { THEME } from '../../theme';
 
-const SelectYearButton = ({ onPress }) => {
+const SelectYearButton = (props) => {
+    const { year, onPress } = props;
+
     const insets = useSafeAreaInsets();
 
     return (
@@ -14,7 +16,7 @@ const SelectYearButton = ({ onPress }) => {
             style={styles.button}
             activeOpacity={0.7}
         >
-            <Text style={styles.text}>Año 2022</Text>
+            <Text style={styles.text}>Año {year}</Text>
         </TouchableOpacity>
     )
 }

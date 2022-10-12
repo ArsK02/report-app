@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreen } from './HomeScreen';
 import { HeaderBackButton } from '../../components/buttons/HeaderBackButton';
-import { MounthReportScreen } from '../mounth/MounthReportScreen';
+import { MonthReportScreen } from '../month/MonthReportScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,11 +23,12 @@ export const HomeStack = ({ navigation }) => {
             />
 
             <Stack.Screen
-                name="MounthReportScreen"
-                component={MounthReportScreen}
+                name="MonthReportScreen"
+                component={MonthReportScreen}
                 options={{
                     headerShown: true,
-                    title: ''
+                    title: '',
+                    presentation: 'modal'
                 }}
             />
         </Stack.Navigator>

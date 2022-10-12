@@ -51,6 +51,6 @@ export const MOUNTH_DATA = [
     },
 ]
 
-export const getMounthData = () => {
+export const getMonthData = () => {
     return MOUNTH_DATA.slice(0, moment().month() + 1);
 }

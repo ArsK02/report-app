@@ -16,6 +16,7 @@ export const SettingsStack = ({ navigation }) => {
                 // cardShadowEnabled: false,
                 // headerStatusBarHeight: 0,
                 // headerBackTitleVisible: false,
+                headerShown: false,
                 headerShadowVisible: false,
                 // gestureEnabled: true,
                 // headerStyle : {

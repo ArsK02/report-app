@@ -2,6 +2,9 @@ import {
     reportsGetAllDataLoadingAction,
     reportsGetAllDataLoadedAction,
     reportsGetAllDataFailAction,
+    reportsGetByMonthLoadingAction,
+    reportsGetByMonthLoadedAction,
+    reportsGetByMonthFailAction,
     reportsCreateLoadingAction,
     reportsCreateLoadedAction,
     reportsCreateFailAction
@@ -13,43 +16,31 @@ import * as ReportsService from './reports.service'
 import moment from 'moment';
 
 
-export async function doReportsGetAppData(dispatch, realm, limit, offset) {
+export async function doReportsGetAppData(dispatch, realm, params) {
     try {
-        dispatch(reportsGetAllDataLoadingAction({limit: limit, offset: offset}));
+        dispatch(reportsGetAllDataLoadingAction(params));
         const reports = await ReportsService.getAllReports(realm);
         dispatch(reportsGetAllDataLoadedAction(reports));
-        // realm.write(async () => {
-        //     await realm.create("Report", {
-        //         _id: new Realm.BSON.ObjectId(),
-        //         title: "1233123",
-        //       });
-        // })
-        console.log(reports)
-    } catch (err) {
+    } catch (err) { 
         dispatch(reportsGetAllDataFailAction(err))
     }
 }
 
-export async function doReportsCreate(dispatch, realm, title, dateStart = +moment.utc(), publications = 0, videos = 0, revisit = 0, studies = 0, completed = false) {
+export async function doReportsGetByMonth(dispatch, realm, params) {
     try {
-        dispatch(reportsCreateLoadingAction({
-            title: title,
-            dateStart: dateStart,
-            publications: publications,
-            videos: videos,
-            revisit: revisit,
-            studies: studies,
-            completed: completed
-        }));
-        const newReport = await ReportsService.addReport(realm, title, dateStart, publications, videos, revisit, studies, completed);
+        dispatch(reportsGetByMonthLoadingAction(params));
+        const reports = await ReportsService.getAllReportsByMonth(realm, params);
+        dispatch(reportsGetByMonthLoadedAction(reports));
+    } catch (err) {
+        dispatch(reportsGetByMonthFailAction(err))
+    }
+}
+
+export async function doReportsCreate(dispatch, realm, params) {
+    try {
+        dispatch(reportsCreateLoadingAction(params));
+        const newReport = await ReportsService.addReport(realm, params);
         dispatch(reportsCreateLoadedAction(newReport));
-        // realm.write(async () => {
-        //     await realm.create("Report", {
-        //         _id: new Realm.BSON.ObjectId(),
-        //         title: "1233123",
-        //       });
-        // })
-        console.log(reports)
     } catch (err) {
         dispatch(reportsCreateFailAction(err))
     }

@@ -4,7 +4,8 @@ import { ContextMenuButton } from '../buttons/ContextMenuButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-export const MounthReportItem = ({ item }) => {
+export const MonthReportItem = ({ item }) => {
+    console.log('ITEMEE ---------------------->', item);
     return (
         <View
             style={styles.container}
@@ -12,13 +13,13 @@ export const MounthReportItem = ({ item }) => {
             <View
                 style={styles.title}
             >
-                <Text style={styles.titleText}>{item.date}</Text>
+                <Text style={styles.titleText}>{item.day}</Text>
             </View>
-            {item.items.map(elem => (
+            {item.data.map(elem => (
                 <View
                     style={styles.item}
                 >
-                    <Text style={styles.itemText}>{elem.title}</Text>
+                    <Text style={styles.itemText}>{elem.title == "" ? new Date(elem.date).toISOString() : elem.title}</Text>
                     <View style={styles.actionContainer}>
                         <ContextMenuButton >
                             <TouchableOpacity >

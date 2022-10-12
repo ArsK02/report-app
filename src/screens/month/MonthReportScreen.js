@@ -1,17 +1,27 @@
-import React, { useState, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, Button, FlatList } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ReportsRealmContext } from '../../store/reports/models/index';
 
-import { MounthReportHeader } from '../../components/mounth-report/MounthReportHeader';
-import { MounthReportItem } from '../../components/mounth-report/MounthReportItem';
+import { doReportsGetByMonth } from '../../store/reports/reports.effects';
+
+import { MonthReportHeader } from '../../components/month-report/MonthReportHeader';
+import { MonthReportItem } from '../../components/month-report/MonthReportItem';
 
 const { useRealm } = ReportsRealmContext;
 
-export const MounthReportScreen = ({ navigation }) => {
+
+export const MonthReportScreen = ({ route, navigation }) => {
+
+    const { year, month } = route.params;
     const dispatch = useDispatch();
     const realm = useRealm();
+
+    const reportsGetByMonthData = useSelector(state => state.reports.reportsGetByMonthData);
+    const reportsGetByMonthLoading = useSelector(state => state.reports.reportsGetByMonthLoading);
+    const reportsGetByMonthLoaded = useSelector(state => state.reports.reportsGetByMonthLoaded);
+
     const DATA = [
         {
             id: 0,
@@ -60,6 +70,16 @@ export const MounthReportScreen = ({ navigation }) => {
             ]
         }
     ]
+
+    useEffect(() => {
+        doReportsGetByMonth(dispatch, realm, { year: year, month: month});
+    }, []);
+
+    useEffect(() => {
+        if (reportsGetByMonthLoaded) {
+            // console.log('reportsGetByMonthData -> ', reportsGetByMonthData);
+        }
+    }, [reportsGetByMonthLoaded]);
     // doReportsCreate(dispatch, realm, 'title');
     // doReportsGetAppData(dispatch, realm, {test: 1});
     // moment.locale('en')
@@ -69,12 +89,20 @@ export const MounthReportScreen = ({ navigation }) => {
     // console.log('selectedMonth: ', selectedMonth)
 
     return (
-        <FlatList
-                data={DATA || []}
-                ListHeaderComponent={() => <MounthReportHeader title={'Septiembre'}/>}
-                renderItem={({item}) => <MounthReportItem item={item}/>}
-                keyExtractor={item => item.id}
-            />
+        <>
+            {!!reportsGetByMonthLoaded ?
+                <FlatList
+                    data={reportsGetByMonthData.data || []}
+                    ListHeaderComponent={() => <MonthReportHeader month={reportsGetByMonthData.month}/>}
+                    renderItem={({item}) => <MonthReportItem item={item}/>}
+                    keyExtractor={item => item.day}
+                    key={item => item.day}
+                />
+            :
+                <Text>Not Found</Text>
+            }
+        </>
+        
     );
 }
 
