@@ -2,8 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreen } from './HomeScreen';
-import { HeaderBackButton } from '../../components/buttons/HeaderBackButton';
-import { MonthReportScreen } from '../month/MonthReportScreen';
+import { HeaderBackButton } from '../../components/buttons/HeaderBackButton';
+import { MonthReportScreen } from './MonthReportScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +14,7 @@ export const HomeStack = ({ navigation }) => {
             screenOptions={{
                 headerShown: false,
                 headerShadowVisible: false,
-                headerLeft: () => <HeaderBackButton navigation={navigation}/>
+                headerLeft: () => <HeaderBackButton navigation={navigation} />
             }}
         >
             <Stack.Screen

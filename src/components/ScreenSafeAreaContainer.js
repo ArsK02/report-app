@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const ScreenSafeAreaContainer = ({ children, scrollContainer, paddingHorizontal, disableSafeAreaEdges, noBounces, style }) => {
+const ScreenSafeAreaContainer = ({ children, scrollContainer, paddingHorizontal, disableSafeAreaEdges, noBounces, style, tabsIndent }) => {
     const insets = useSafeAreaInsets();
 
     return (
@@ -11,8 +11,8 @@ const ScreenSafeAreaContainer = ({ children, scrollContainer, paddingHorizontal,
             style={[
                 styles.container,
                 (!scrollContainer && paddingHorizontal) && styles.containerPadding,
-                !scrollContainer && style
-            ]}
+                (!scrollContainer && tabsIndent) && { paddingBottom: insets.bottom + 18 },
+                !scrollContainer && style,]}
             edges={disableSafeAreaEdges ?
                 ['top', 'bottom', 'left', 'right'].filter(item => !disableSafeAreaEdges.includes(item))
                 : ['top', 'bottom', 'left', 'right']
@@ -23,6 +23,7 @@ const ScreenSafeAreaContainer = ({ children, scrollContainer, paddingHorizontal,
                     contentContainerStyle={[
                         styles.scrollContainer,
                         paddingHorizontal && styles.containerPadding,
+                        tabsIndent && { paddingBottom: insets.bottom + 18 },
                         style
                     ]}
                     bounces={noBounces ? false : true}

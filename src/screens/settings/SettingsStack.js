@@ -2,6 +2,10 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { SettingsScreen } from './SettingsScreen';
+import BackupScreen from './BackupScreen';
+import { HeaderBackButton } from '../../components/buttons/HeaderBackButton';
+import DonationScreen from './DonationScreen';
+import PrivacyPolicyScreen from './PrivacyPolicyScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,24 +14,41 @@ export const SettingsStack = ({ navigation }) => {
     return (
         <Stack.Navigator
             screenOptions={{
-                //headerStyle: colorScheme === 'dark' ? DARK_HEADER_STYLE : HEADER_STYLE,
-                // headerTitleStyle: colorScheme === 'dark' ? DARK_HEADER_TITLE_STYLE : HEADER_TITLE_STYLE,
-                // headerTintColor: colorScheme === 'dark' ? 'white' : 'black',
-                // cardShadowEnabled: false,
-                // headerStatusBarHeight: 0,
-                // headerBackTitleVisible: false,
                 headerShown: false,
                 headerShadowVisible: false,
-                // gestureEnabled: true,
-                // headerStyle : {
-                //     backgroundColor: activeTheme.BACKGROUND_COLOR
-                // },
             }}
         >
             <Stack.Screen
                 name="SettingsScreen"
                 component={SettingsScreen}
-                options={{ title: 'Settings' }}
+            />
+            <Stack.Screen
+                name="BackupScreen"
+                component={BackupScreen}
+                options={{
+                    headerShown: true,
+                    title: '',
+                    headerLeft: () => <HeaderBackButton navigation={navigation} onPress={() => navigation.navigate('SettingsScreen')} />
+                }}
+            />
+            <Stack.Screen
+                name="DonationScreen"
+                component={DonationScreen}
+                options={{
+                    headerShown: true,
+                    title: '',
+                    headerLeft: () => <HeaderBackButton navigation={navigation} onPress={() => navigation.navigate('SettingsScreen')} />
+                }}
+            />
+            <Stack.Screen
+                name="PrivacyPolicyScreen"
+                component={PrivacyPolicyScreen}
+                options={{
+                    headerShown: true,
+                    title: '',
+                    headerLeft: () => <HeaderBackButton navigation={navigation} onPress={() => navigation.navigate('SettingsScreen')} />,
+                    presentation: 'modal'
+                }}
             />
         </Stack.Navigator>
     );
