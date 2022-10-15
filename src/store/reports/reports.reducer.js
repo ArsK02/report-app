@@ -1,5 +1,8 @@
 import { initialState } from '../initialState';
 import {
+    APP_STATE_LOADING,
+    APP_STATE_LOADED,
+    APP_STATE_FAIL,
     REPORTS_GET_ALL_DATA_LOADING,
     REPORTS_GET_ALL_DATA_LOADED,
     REPORTS_GET_ALL_DATA_FAIL,
@@ -14,11 +17,38 @@ import {
     REPORTS_GET_MIN_YEAR_FAIL,
     REPORST_GET_STATS_BY_YEAR_LOADING,
     REPORST_GET_STATS_BY_YEAR_LOADED,
-    REPORST_GET_STATS_BY_YEAR_FAIL
+    REPORST_GET_STATS_BY_YEAR_FAIL,
+    ACTIVE_REPORT_LOADING,
+    ACTIVE_REPORT_LOADED,
+    ACTIVE_REPORT_FAIL
 } from './reports.types';
 
 export const reportsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case APP_STATE_LOADING:
+            return {
+                ...state,
+                appStateLoading: true,
+                appStateLoaded: false,
+                appStateFail: false
+            }
+        case APP_STATE_LOADED:
+            // console.log('reducer reports ->' , action.payload);
+            return {
+                ...state,
+                appStateData: action.payload,
+                appStateLoading: false,
+                appStateLoaded: true,
+                appStateFail: false
+            }
+        case APP_STATE_FAIL:
+            return {
+                ...state,
+                appStateLoading: false,
+                appStateLoaded: false,
+                appStateFail: true
+            }
+
         case REPORTS_GET_ALL_DATA_LOADING:
             return {
                 ...state,
@@ -137,6 +167,30 @@ export const reportsReducer = (state = initialState, action) => {
                 reportsGetStatsByYearLoading: false,
                 reportsGetStatsByYearLoaded: false,
                 reportsGetStatsByYearFail: true
+            }
+
+        case ACTIVE_REPORT_LOADING:
+            return {
+                ...state,
+                activeReportLoading: true,
+                activeReportLoaded: false,
+                activeReportFail: false
+            }
+        case ACTIVE_REPORT_LOADED:
+            // console.log('reducer reports ->' , action.payload);
+            return {
+                ...state,
+                activeReportData: action.payload,
+                activeReportLoading: false,
+                activeReportLoaded: true,
+                activeReportFail: false
+            }
+        case ACTIVE_REPORT_FAIL:
+            return {
+                ...state,
+                activeReportLoading: false,
+                activeReportLoaded: false,
+                activeReportFail: true
             }
         default:
             return state;

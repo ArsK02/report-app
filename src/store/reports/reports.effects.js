@@ -1,4 +1,7 @@
 import {
+    appStateLoadingAction,
+    appStateLoadedAction,
+    appStateFailAction,
     reportsGetAllDataLoadingAction,
     reportsGetAllDataLoadedAction,
     reportsGetAllDataFailAction,
@@ -13,7 +16,10 @@ import {
     reportsGetMinYeareFailAction,
     reportsGetStatsByYearLoadingAction,
     reportsGetStatsByYearLoadedAction,
-    reportsGetStatsByYearFailAction
+    reportsGetStatsByYearFailAction,
+    activeReportLoadingAction,
+    activeReportLoadedAction,
+    activeReportFailAction
 } from './reports.actions';
 
 import { Realm } from "@realm/react";
@@ -21,6 +27,14 @@ import { Reports } from './models/Reports';
 import * as ReportsService from './reports.service'
 import moment from 'moment';
 
+export async function doAppStateChange(dispatch, state) {
+    try {
+        dispatch(appStateLoadingAction(state));
+        dispatch(appStateLoadedAction(state));
+    } catch (err) { 
+        dispatch(appStateFailAction(err))
+    }
+}
 
 export async function doReportsGetAppData(dispatch, realm, params) {
     try {
@@ -69,5 +83,15 @@ export async function doReportsGetStatsByYear(dispatch, realm, year) {
         dispatch(reportsGetStatsByYearLoadedAction(stats));
     } catch (err) {
         dispatch(reportsGetStatsByYearFailAction(err))
+    }
+}
+
+export async function doActiveReport(dispatch, realm, params) {
+    try {
+        dispatch(activeReportLoadingAction({}));
+        const stats = await ReportsService.getStatsByYear(realm, params);
+        dispatch(activeReportLoadedAction(stats));
+    } catch (err) {
+        dispatch(activeReportFailAction(err))
     }
 }

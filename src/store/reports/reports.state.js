@@ -1,4 +1,9 @@
 export const reportsState = {
+    appStateData: null,
+    appStateLoading: false,
+    appStateLoaded: false,
+    appStateFail: false,
+    
     reportsGetAllDataData: null,
     reportsGetAllDataLoading: false,
     reportsGetAllDataLoaded: false,
@@ -22,5 +27,10 @@ export const reportsState = {
     reportsGetStatsByYearData: null,
     reportsGetStatsByYearLoading: false,
     reportsGetStatsByYearLoaded: false,
-    reportsGetStatsByYearFail: false
+    reportsGetStatsByYearFail: false,
+
+    activeReportData: null,
+    activeReportLoading: false,
+    activeReportLoaded: false,
+    activeReportFail: false,
 }

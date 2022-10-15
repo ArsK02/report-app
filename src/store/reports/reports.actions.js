@@ -1,4 +1,7 @@
 import {
+    APP_STATE_LOADING,
+    APP_STATE_LOADED,
+    APP_STATE_FAIL,
     REPORTS_GET_ALL_DATA_LOADING,
     REPORTS_GET_ALL_DATA_LOADED,
     REPORTS_GET_ALL_DATA_FAIL,
@@ -13,8 +16,30 @@ import {
     REPORTS_GET_MIN_YEAR_FAIL,
     REPORST_GET_STATS_BY_YEAR_LOADING,
     REPORST_GET_STATS_BY_YEAR_LOADED,
-    REPORST_GET_STATS_BY_YEAR_FAIL
+    REPORST_GET_STATS_BY_YEAR_FAIL,
+    ACTIVE_REPORT_LOADING,
+    ACTIVE_REPORT_LOADED,
+    ACTIVE_REPORT_FAIL
 } from './reports.types';
+
+export function appStateLoadingAction(data) {
+    return {
+        type: APP_STATE_LOADING,
+        payload: data
+    }
+}
+export function appStateLoadedAction(data) {
+    return {
+        type: APP_STATE_LOADED,
+        payload: data
+    }
+}
+export function appStateFailAction(data) {
+    return {
+        type: APP_STATE_FAIL,
+        payload: data
+    }
+}
 
 export function reportsGetAllDataLoadingAction(data) {
     return {
@@ -109,6 +134,25 @@ export function reportsGetStatsByYearLoadedAction(data) {
 export function reportsGetStatsByYearFailAction(data) {
     return {
         type: REPORST_GET_STATS_BY_YEAR_FAIL,
+        payload: data
+    }
+}
+
+export function activeReportLoadingAction(data) {
+    return {
+        type: ACTIVE_REPORT_LOADING,
+        payload: data
+    }
+}
+export function activeReportLoadedAction(data) {
+    return {
+        type: ACTIVE_REPORT_LOADED,
+        payload: data
+    }
+}
+export function activeReportFailAction(data) {
+    return {
+        type: ACTIVE_REPORT_FAIL,
         payload: data
     }
 }
