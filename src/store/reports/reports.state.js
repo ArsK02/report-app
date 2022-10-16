@@ -19,6 +19,16 @@ export const reportsState = {
     reportsCreateLoaded: false,
     reportsCreateFail: false,
 
+    reportsEditData: null,
+    reportsEditLoading: false,
+    reportsEditLoaded: false,
+    reportsEditFail: false,
+
+    reportsDeleteData: null,
+    reportsDeleteLoading: false,
+    reportsDeleteLoaded: false,
+    reportsDeleteFail: false,
+
     reportsGetMinYearData: null,
     reportsGetMinYearLoading: false,
     reportsGetMinYearLoaded: false,

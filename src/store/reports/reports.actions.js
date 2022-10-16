@@ -11,6 +11,12 @@ import {
     REPORTS_CREATE_LOADING,
     REPORTS_CREATE_LOADED,
     REPORTS_CREATE_FAIL,
+    REPORTS_EDIT_LOADING,
+    REPORTS_EDIT_LOADED,
+    REPORTS_EDIT_FAIL,
+    REPORTS_DELETE_LOADING,
+    REPORTS_DELETE_LOADED,
+    REPORTS_DELETE_FAIL,
     REPORTS_GET_MIN_YEAR_LOADING,
     REPORTS_GET_MIN_YEAR_LOADED,
     REPORTS_GET_MIN_YEAR_FAIL,
@@ -95,6 +101,44 @@ export function reportsCreateLoadedAction(data) {
 export function reportsCreateFailAction(data) {
     return {
         type: REPORTS_CREATE_FAIL,
+        payload: data
+    }
+}
+
+export function reportsEditLoadingAction(data) {
+    return {
+        type: REPORTS_EDIT_LOADING,
+        payload: data
+    }
+}
+export function reportsEditLoadedAction(data) {
+    return {
+        type: REPORTS_EDIT_LOADED,
+        payload: data
+    }
+}
+export function reportsEditFailAction(data) {
+    return {
+        type: REPORTS_EDIT_FAIL,
+        payload: data
+    }
+}
+
+export function reportsDeleteLoadingAction(data) {
+    return {
+        type: REPORTS_DELETE_LOADING,
+        payload: data
+    }
+}
+export function reportsDeleteLoadedAction(data) {
+    return {
+        type: REPORTS_DELETE_LOADED,
+        payload: data
+    }
+}
+export function reportsDeleteFailAction(data) {
+    return {
+        type: REPORTS_DELETE_FAIL,
         payload: data
     }
 }

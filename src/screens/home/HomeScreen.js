@@ -30,7 +30,7 @@ export const HomeScreen = ({ navigation }) => {
     return (
         <ScreenSafeAreaContainer style={styles.screenContainer}>
             <MonthSlider navigation={navigation}/>
-            <ReportForm />
+            <ReportForm/>
         </ScreenSafeAreaContainer>
     );
 }

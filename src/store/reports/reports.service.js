@@ -61,6 +61,47 @@ export async function addReport (realm, params) {
     }
 }
 
+export async function editReport(realm, params) {
+    try {
+        // console.log(params);
+        const reports = await realm.objects("Report");
+        // console.log(reports);
+        const result = await realm.write(async () => {
+            reports.forEach(report => {
+                if (report._id.toString() == params.id) {
+                    report.title = params.value.title;
+                    report.hours = params.value.hours;
+                    report.minutes = params.value.minutes;
+                    report.publications = params.value.publications;
+                    report.videos = params.value.videos;
+                    report.returnVisits = params.value.returnVisits;
+                    report.bibleStudies = params.value.bibleStudies;
+                }
+                return report;
+            });
+            // return await realm.create('Report', Report.add(params.title, params.date, params.hours, params.minutes, params.publications, params.videos, params.returnVisits, params.bibleStudies));
+        });
+        return result;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function deleteReport(realm, id) {
+    try {
+        // console.log(params);
+        const reports = await realm.objects("Report");
+        // console.log(reports);
+        const result = await realm.write(async () => {
+            console.log(reports.filter(report => report._id.toString() == id));
+            realm.delete(reports.filter(report => report._id.toString() == id));
+        });
+        return result;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export async function getMinYear (realm) {
     try {
         const years = [];

@@ -27,8 +27,7 @@ export const HomeStack = ({ navigation }) => {
                 component={MonthReportScreen}
                 options={{
                     headerShown: true,
-                    title: '',
-                    presentation: 'modal'
+                    title: ''
                 }}
             />
         </Stack.Navigator>

@@ -12,6 +12,12 @@ import {
     REPORTS_CREATE_LOADING,
     REPORTS_CREATE_LOADED,
     REPORTS_CREATE_FAIL,
+    REPORTS_EDIT_LOADING,
+    REPORTS_EDIT_LOADED,
+    REPORTS_EDIT_FAIL,
+    REPORTS_DELETE_LOADING,
+    REPORTS_DELETE_LOADED,
+    REPORTS_DELETE_FAIL,
     REPORTS_GET_MIN_YEAR_LOADING,
     REPORTS_GET_MIN_YEAR_LOADED,
     REPORTS_GET_MIN_YEAR_FAIL,
@@ -119,6 +125,54 @@ export const reportsReducer = (state = initialState, action) => {
                 reportsCreateLoading: false,
                 reportsCreateLoaded: false,
                 reportsCreateFail: true
+            }
+
+        case REPORTS_EDIT_LOADING:
+            return {
+                ...state,
+                reportsEditLoading: true,
+                reportsEditLoaded: false,
+                reportsEditFail: false
+            }
+        case REPORTS_EDIT_LOADED:
+            // console.log('reducer reports ->' , action.payload);
+            return {
+                ...state,
+                reportsEditData: action.payload,
+                reportsEditLoading: false,
+                reportsEditLoaded: true,
+                reportsEditFail: false
+            }
+        case REPORTS_EDIT_FAIL:
+            return {
+                ...state,
+                reportsEditLoading: false,
+                reportsEditLoaded: false,
+                reportsEditFail: true
+            }
+
+        case REPORTS_DELETE_LOADING:
+            return {
+                ...state,
+                reportsDeleteLoading: true,
+                reportsDeleteLoaded: false,
+                reportsDeleteFail: false
+            }
+        case REPORTS_DELETE_LOADED:
+            // console.log('reducer reports ->' , action.payload);
+            return {
+                ...state,
+                reportsDeleteData: action.payload,
+                reportsDeleteLoading: false,
+                reportsDeleteLoaded: true,
+                reportsDeleteFail: false
+            }
+        case REPORTS_DELETE_FAIL:
+            return {
+                ...state,
+                reportsDeleteLoading: false,
+                reportsDeleteLoaded: false,
+                reportsDeleteFail: true
             }
 
         case REPORTS_GET_MIN_YEAR_LOADING:

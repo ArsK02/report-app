@@ -11,6 +11,12 @@ import {
     reportsCreateLoadingAction,
     reportsCreateLoadedAction,
     reportsCreateFailAction,
+    reportsEditLoadingAction,
+    reportsEditLoadedAction,
+    reportsEditFailAction,
+    reportsDeleteLoadingAction,
+    reportsDeleteLoadedAction,
+    reportsDeleteFailAction,
     reportsGetMinYearLoadingAction,
     reportsGetMinYearLoadedAction,
     reportsGetMinYeareFailAction,
@@ -63,6 +69,26 @@ export async function doReportsCreate(dispatch, realm, params) {
         dispatch(reportsCreateLoadedAction(newReport));
     } catch (err) {
         dispatch(reportsCreateFailAction(err))
+    }
+}
+
+export async function doReportsEdit(dispatch, realm, params) {
+    try {
+        dispatch(reportsEditLoadingAction(params));
+        const reportResult = await ReportsService.editReport(realm, params);
+        dispatch(reportsEditLoadedAction(reportResult));
+    } catch (err) {
+        dispatch(reportsEditFailAction(err))
+    }
+}
+
+export async function doReportsDelete(dispatch, realm, id) {
+    try {
+        dispatch(reportsDeleteLoadingAction(id));
+        const result = await ReportsService.deleteReport(realm, id);
+        dispatch(reportsDeleteLoadedAction(result));
+    } catch (err) {
+        dispatch(reportsDeleteFailAction(err))
     }
 }
 

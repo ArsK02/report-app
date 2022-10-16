@@ -22,6 +22,8 @@ export const MonthSlider = ({ navigation }) => {
     const data = getMonthData();
 
     const reportsCreateLoaded = useSelector(state => state.reports.reportsCreateLoaded);
+    const reportsEditLoaded = useSelector(state => state.reports.reportsEditLoaded);
+    const reportsDeleteLoaded = useSelector(state => state.reports.reportsDeleteLoaded);
 
     const getMonths = (year) => {
         const months = [];
@@ -50,10 +52,10 @@ export const MonthSlider = ({ navigation }) => {
     }, [year]);
 
     useEffect(() => {
-        if (reportsCreateLoaded) {
+        if (reportsCreateLoaded || reportsEditLoaded || reportsDeleteLoaded) {
             doReportsGetStatsByYear(dispatch, realm, year);
         }
-    }, [reportsCreateLoaded])
+    }, [reportsCreateLoaded, reportsEditLoaded, reportsDeleteLoaded])
     
     return (
         <View style={{ flex: 1 }}>

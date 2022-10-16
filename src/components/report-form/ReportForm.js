@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState, useImperativeHandle, forwardRef } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFormik } from 'formik';
 import moment from 'moment/min/moment-with-locales';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReportsRealmContext } from '../../store/reports/models/index';
-import { doReportsGetAppData, doReportsCreate } from '../../store/reports/reports.effects';
+import { doReportsGetAppData, doReportsCreate, doReportsEdit } from '../../store/reports/reports.effects';
 
 import { BottomSheetModalComp } from '../BottomSheetModalComp';
 import AddReportButton from '../buttons/AddReportButton';
@@ -17,16 +17,24 @@ import DatePicker from 'react-native-date-picker'
 
 const { useRealm } = ReportsRealmContext;
 
-const ReportForm = ({ }) => {
+const ReportForm = forwardRef((props, ref) => {
     const dispatch = useDispatch();
     const realm = useRealm();
 
+    const { reportData = null, addButton = true } = props;
+
+    const formMode = reportData == null ? 'create' : 'edit';
     const [datePicker, setDatePicker] = useState(new Date())
     const [openPicker, setOpenPicker] = useState(false)
 
     const reportsCreateData = useSelector(state => state.reports.reportsCreateData);
     const reportsCreateLoading = useSelector(state => state.reports.reportsCreateLoading);
     const reportsCreateLoaded = useSelector(state => state.reports.reportsCreateLoaded); 
+
+    const reportsEditData = useSelector(state => state.reports.reportsEditData);
+    const reportsEditLoading = useSelector(state => state.reports.reportsEditLoading);
+    const reportsEditLoaded = useSelector(state => state.reports.reportsEditLoaded);
+
     // FORM
     const {
         handleChange,
@@ -39,22 +47,48 @@ const ReportForm = ({ }) => {
         isValid
     } = useFormik({
         validationSchema: ReportSchema,
-        initialValues: { title: '', date: new Date().toISOString(), hours: 0, minutes: 0, publications: 0, videos: 0, returnVisits: 0, bibleStudies: 0 },
+        initialValues: {
+            title: '',
+            date: new Date().toISOString(),
+            hours: 0,
+            minutes: 0,
+            publications: 0,
+            videos: 0,
+            returnVisits: 0,
+            bibleStudies: 0 },
         onSubmit: values => {
-            const now = new Date();
-            if (now.getTime() >= new Date(values.date).getTime()) {
-                doReportsCreate(dispatch, realm, values);
+            if (formMode == 'edit') {
+                doReportsEdit(dispatch, realm, {id: reportData._id, value: values});
+            } else {
+                const now = new Date();
+                if (now.getTime() >= new Date(values.date).getTime()) {
+                    doReportsCreate(dispatch, realm, values);
+                }
             }
         }
     });
 
+    // useEffect(() => setFormMode(), reportData);
 
     useEffect(() => {
-        if (reportsCreateLoaded) {
+        if (formMode == 'edit') {
+            setFieldValue('title', reportData.title);
+            setFieldValue('date', new Date(reportData.date).toISOString());
+            setFieldValue('hours', reportData.hours);
+            setFieldValue('minutes', reportData.minutes);
+            setFieldValue('publications', reportData.publications);
+            setFieldValue('returnVisits', reportData.returnVisits);
+            setFieldValue('bibleStudies', reportData.bibleStudies);
+        }
+    }, [formMode, reportData])
+
+
+    useEffect(() => {
+        if (reportsCreateLoaded || reportsEditLoaded) {
             // form restore
             bottomSheetModalRef.current.close();
         }
-    }, [reportsCreateLoaded])
+    }, [reportsCreateLoaded, reportsEditLoaded])
 
     // BottomSheetModal
     const bottomSheetModalRef = useRef(null);
@@ -64,7 +98,21 @@ const ReportForm = ({ }) => {
         ReportSchema.fields.date.max(new Date())
         setFieldValue('date', new Date().toISOString());
         bottomSheetModalRef.current?.present();
+        
     }, []);
+
+    const open = () => {
+        bottomSheetModalRef.current?.present();
+    }
+
+    const close = () => {
+        bottomSheetModalRef.current.close();
+    }
+
+    useImperativeHandle(ref, () => ({
+        open: open,
+        close: close
+    }));
 
     // Report Form Item
     const ReportFormItem = ({ text, icon, date, marginB, value, onChange, error, minutes }) => (
@@ -94,7 +142,12 @@ const ReportForm = ({ }) => {
 
     return (
         <>
+            {addButton == true ?
             <AddReportButton onPress={handlePresentModalPress} />
+            : <></>
+            }
+            
+            
             <BottomSheetModalComp
                 innerRef={bottomSheetModalRef}
                 snapPoints={snapPoints}
@@ -161,7 +214,7 @@ const ReportForm = ({ }) => {
                     />
                 </View>
                 <View style={styles.sheetButtonsContainer}>
-                    <StopWatchButton buttonStyle={styles.stopWatchButton} />
+                    {formMode == 'create' ? <StopWatchButton buttonStyle={styles.stopWatchButton} /> : <></>}
                     <MainButton onPress={handleSubmit}/>
                 </View>
             </BottomSheetModalComp>
@@ -181,7 +234,7 @@ const ReportForm = ({ }) => {
             />
         </>
     )
-}
+})
 
 export default ReportForm
 

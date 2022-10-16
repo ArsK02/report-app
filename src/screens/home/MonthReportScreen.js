@@ -8,6 +8,7 @@ import { doReportsGetByMonth } from '../../store/reports/reports.effects';
 
 import { MonthReportHeader } from '../../components/month-report/MonthReportHeader';
 import { MonthReportItem } from '../../components/month-report/MonthReportItem';
+import ReportForm from '../../components/report-form/ReportForm';
 
 const { useRealm } = ReportsRealmContext;
 
@@ -18,9 +19,20 @@ export const MonthReportScreen = ({ route, navigation }) => {
     const dispatch = useDispatch();
     const realm = useRealm();
 
+    const reportFormRef = useRef(null);
+    const [reportFormDataEdit, setReportFromDataEdit] = useState(null);
+
     const reportsGetByMonthData = useSelector(state => state.reports.reportsGetByMonthData);
     const reportsGetByMonthLoading = useSelector(state => state.reports.reportsGetByMonthLoading);
     const reportsGetByMonthLoaded = useSelector(state => state.reports.reportsGetByMonthLoaded);
+
+    const reportsEditData = useSelector(state => state.reports.reportsEditData);
+    const reportsEditLoading = useSelector(state => state.reports.reportsEditLoading);
+    const reportsEditLoaded = useSelector(state => state.reports.reportsEditLoaded);
+
+    const reportsDeleteData = useSelector(state => state.reports.reportsDeleteData);
+    const reportsDeleteLoading = useSelector(state => state.reports.reportsDeleteLoading);
+    const reportsDeleteLoaded = useSelector(state => state.reports.reportsDeleteLoaded);
 
     useEffect(() => {
         doReportsGetByMonth(dispatch, realm, { year: year, month: month});
@@ -28,9 +40,15 @@ export const MonthReportScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         if (reportsGetByMonthLoaded) {
-            // console.log('reportsGetByMonthData -> ', reportsGetByMonthData);
+            console.log('reportsGetByMonthData -> ', reportsGetByMonthData);
         }
     }, [reportsGetByMonthLoaded]);
+
+    useEffect(() => {
+        if (reportsEditLoaded || reportsDeleteLoaded) {
+            doReportsGetByMonth(dispatch, realm, { year: year, month: month});
+        }
+    }, [reportsEditLoaded, reportsDeleteLoaded])
     // doReportsCreate(dispatch, realm, 'title');
     // doReportsGetAppData(dispatch, realm, {test: 1});
     // moment.locale('en')
@@ -45,13 +63,14 @@ export const MonthReportScreen = ({ route, navigation }) => {
                 <FlatList
                     data={reportsGetByMonthData.data || []}
                     ListHeaderComponent={() => <MonthReportHeader month={reportsGetByMonthData.month}/>}
-                    renderItem={({item}) => <MonthReportItem key={item.day} item={item}/>}
+                    renderItem={({item}) => <MonthReportItem setReportFromData={setReportFromDataEdit} reportFormRef={reportFormRef} key={item.day} item={item}/>}
                     keyExtractor={item => item.day}
                     key={item => item.day}
                 />
             :
                 <Text>Not Found</Text>
             }
+            <ReportForm reportData={reportFormDataEdit} ref={reportFormRef} addButton={false}/>
         </>
         
     );

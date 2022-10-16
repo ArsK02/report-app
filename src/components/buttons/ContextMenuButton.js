@@ -3,18 +3,16 @@ import { Image, TouchableOpacity, View, Platform, StyleSheet } from 'react-nativ
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MenuView } from '@react-native-menu/menu';
 
-export const ContextMenuButton = ({ navigation, children, style }) => {
+export const ContextMenuButton = ({ navigation, children, style, onPress, data }) => {
 
     return (
         <MenuView
                 title="Menú"
-                onPressAction={({ nativeEvent }) => {
-                    console.warn(JSON.stringify(nativeEvent));
-                }}
+                onPressAction={({ nativeEvent }) => onPress(nativeEvent)}
                 shouldOpenOnLongPress={false}
                 actions={[
                 {
-                    id: 'edit',
+                    id: `edit_${data._id}`,
                     title: 'Editar',
                     titleColor: '#000000',
                     image: Platform.select({
@@ -24,7 +22,7 @@ export const ContextMenuButton = ({ navigation, children, style }) => {
                     imageColor: '#000000',
                 },
                 {
-                    id: 'delete',
+                    id: `delete_${data._id}`,
                     title: 'Borrar',
                     attributes: {
                     destructive: true,
