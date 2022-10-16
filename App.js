@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { AppNavigation } from './src/navigation/AppNavigation';
+import { LogicCore } from './src/core/Logic.core';
 
 import { ReportsRealmContext } from './src/store/reports/models/index';
 
@@ -15,6 +16,7 @@ export default function App() {
     <RealmProvider>
       <Provider store={store}>
         <BottomSheetModalProvider>
+            <LogicCore/>
             <AppNavigation />
           </BottomSheetModalProvider>
       </Provider>
