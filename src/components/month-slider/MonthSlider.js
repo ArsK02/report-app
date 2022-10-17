@@ -52,7 +52,7 @@ export const MonthSlider = ({ navigation }) => {
     }, [year]);
 
     useEffect(() => {
-        if (reportsCreateLoaded || reportsEditLoaded || reportsDeleteLoaded) {
+        if (reportsCreateLoaded || reportsEditLoaded || reportsDeleteLoaded) {
             doReportsGetStatsByYear(dispatch, realm, year);
         }
     }, [reportsCreateLoaded, reportsEditLoaded, reportsDeleteLoaded])

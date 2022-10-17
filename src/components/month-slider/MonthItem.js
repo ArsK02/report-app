@@ -23,9 +23,10 @@ export const MonthItem = (props) => {
     useEffect(() => {
         if (reportsGetStatsByYearLoaded) {
             if (reportsGetStatsByYearData.year == year) {
+                setStats(null)
                 reportsGetStatsByYearData.data.forEach(elem => {
                     if (elem.month == month) {
-                        setStats(elem);
+                        setStats(JSON.parse(JSON.stringify(elem)));
                     } else {
                         setStats(null)
                     }
