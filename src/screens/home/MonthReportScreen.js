@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, Button, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ReportsRealmContext } from '../../store/reports/models/index';
@@ -40,7 +40,7 @@ export const MonthReportScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         if (reportsGetByMonthLoaded) {
-            console.log('reportsGetByMonthData -> ', reportsGetByMonthData);
+            // console.log('reportsGetByMonthData -> ', reportsGetByMonthData);
         }
     }, [reportsGetByMonthLoaded]);
 
@@ -63,7 +63,7 @@ export const MonthReportScreen = ({ route, navigation }) => {
                 <FlatList
                     data={reportsGetByMonthData.data || []}
                     ListHeaderComponent={() => <MonthReportHeader month={reportsGetByMonthData.month}/>}
-                    renderItem={({item}) => <MonthReportItem setReportFromData={setReportFromDataEdit} reportFormRef={reportFormRef} key={item.day} item={item}/>}
+                    renderItem={({item}) => <MonthReportItem setReportFromData={setReportFromDataEdit} reportFormRef={reportFormRef} key={item.day} id={item._id}/>}
                     keyExtractor={item => item.day}
                     key={item => item.day}
                 />

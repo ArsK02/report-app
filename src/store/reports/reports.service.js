@@ -93,7 +93,6 @@ export async function deleteReport(realm, id) {
         const reports = await realm.objects("Report");
         // console.log(reports);
         const result = await realm.write(async () => {
-            console.log(reports.filter(report => report._id.toString() == id));
             realm.delete(reports.filter(report => report._id.toString() == id));
         });
         return result;
@@ -183,8 +182,6 @@ export async function getStatsByYear (realm, year) {
                 })
             }
         }
-        console.log('stats service ------------------------------------------>', stats);
-        console.log('---------------------------------------------------------------------');
         return stats;
     } catch (e) {
         console.log(e);

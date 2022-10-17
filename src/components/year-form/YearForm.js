@@ -52,7 +52,7 @@ const YearForm = (props) => {
 
     useEffect(() => {
         if (reportsGetMinYearLoaded) {
-            console.log('reportsGetMinYearData', reportsGetMinYearData);
+            // console.log('reportsGetMinYearData', reportsGetMinYearData);
             // setYears(getYears(reportsGetMinYearData))
         }
     }, [reportsGetMinYearLoaded])

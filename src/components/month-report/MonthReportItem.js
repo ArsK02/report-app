@@ -10,13 +10,27 @@ import { doReportsDelete } from '../../store/reports/reports.effects';
 const { useRealm } = ReportsRealmContext;
 
 export const MonthReportItem = (props) => {
-    const { item, reportFormRef, setReportFromData } = props;
+    const { id, reportFormRef, setReportFromData } = props;
 
     const dispatch = useDispatch();
     const realm = useRealm();
 
-    const [elem, setElem] = useState()
+    const [item, setItem] = useState(null);
 
+    const reportsGetByMonthData = useSelector(state => state.reports.reportsGetByMonthData);
+    const reportsGetByMonthLoading = useSelector(state => state.reports.reportsGetByMonthLoading);
+    const reportsGetByMonthLoaded = useSelector(state => state.reports.reportsGetByMonthLoaded);
+
+    useEffect(() => {
+        if (reportsGetByMonthLoaded) {
+            reportsGetByMonthData.data.forEach(report => {
+                if (report._id == id) {
+                    // realmjs & react-navigation fix JSON.parse(JSON.stringify(report)
+                    setItem(JSON.parse(JSON.stringify(report)));
+                }
+            })
+        }
+    }, [reportsGetByMonthLoaded])
 
     const onPressAction = (element) => {
         const action = element.event.split('_')[0];
@@ -41,7 +55,7 @@ export const MonthReportItem = (props) => {
             )
         }
     }
-    console.log(item);
+    // console.log(item);
     return (
         <>
             {!!item ?
