@@ -1,12 +1,15 @@
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { Dimensions, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
+import { useTranslation } from "react-i18next";
 
 export const MonthItem = (props) => {
     const { year, month, navigation } = props;
     const width = Dimensions.get('window').width;
 
+    const { t, i18n } = useTranslation();
     const [stats, setStats] = useState(null);
 
     const reportsGetStatsByYearData = useSelector(state => state.reports.reportsGetStatsByYearData);
@@ -19,6 +22,10 @@ export const MonthItem = (props) => {
     const onPressToMounthNavigate = () => {
         navigation.navigate('MonthReportScreen', { year: year, month: month });
     }
+
+    // useEffect(() => {
+    //     i18n.on('languageChanged', (lang) => {console.log('123', lang)})
+    // }, [])
 
     useEffect(() => {
         if (reportsGetStatsByYearLoaded) {
@@ -46,34 +53,34 @@ export const MonthItem = (props) => {
         >
             <View style={styles.item}>
                 <Text style={styles.title}>
-                    {month}
+                    {moment.months(month)}
                 </Text>
                 <View style={styles.containerLine}>
                     <View style={styles.firstLine} />
                 </View>
                 <View style={styles.statContainer}>
                     <Icon name='stopwatch-outline' size={24} />
-                    <Text style={styles.statTitle}>Horas</Text>
+                    <Text style={styles.statTitle}>{t('Hours')}</Text>
                     <Text style={styles.statValue}>{!!stats ? stats.stats.hours : 0}</Text>
                 </View>
                 <View style={styles.statContainer}>
-                    <Icon name='book-outline' size={24} />
-                    <Text style={styles.statTitle}>Publicaciones</Text>
+                    <Icon name='library-outline' size={24} />
+                    <Text style={styles.statTitle}>{t('Publications')}</Text>
                     <Text style={styles.statValue}>{!!stats ? stats.stats.publications : 0}</Text>
                 </View>
                 <View style={styles.statContainer}>
-                    <Icon name='videocam-outline' size={24} />
-                    <Text style={styles.statTitle}>Videos</Text>
+                    <Icon name='play-outline' size={24} />
+                    <Text style={styles.statTitle}>{t('Videos')}</Text>
                     <Text style={styles.statValue}>{!!stats ? stats.stats.videos : 0}</Text>
                 </View>
                 <View style={styles.statContainer}>
-                    <Icon name='help-outline' size={24} />
-                    <Text style={styles.statTitle}>Revisitas</Text>
+                    <Icon name='chatbubbles-outline' size={24} />
+                    <Text style={styles.statTitle}>{t('Return Visits')}</Text>
                     <Text style={styles.statValue}>{!!stats ? stats.stats.returnVisits: 0}</Text>
                 </View>
                 <View style={styles.statContainer}>
-                    <Icon name='people-circle-outline' size={24} />
-                    <Text style={styles.statTitle}>Estudios</Text>
+                    <Icon name='people-outline' size={24} />
+                    <Text style={styles.statTitle}>{t('Bible Studies')}</Text>
                     <Text style={styles.statValue}>{!!stats ? stats.stats.bibleStudies: 0}</Text>
                 </View>
                 <View style={styles.containerLine}>
@@ -84,7 +91,7 @@ export const MonthItem = (props) => {
                     onPress={onPressToShare}
                 >
                     <Icon name='share-outline' size={24} />
-                    <Text style={styles.buttonShareText}>Enviar informe</Text>
+                    <Text style={styles.buttonShareText}>{t('Send Report')}</Text>
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>

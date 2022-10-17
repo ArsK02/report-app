@@ -7,6 +7,7 @@ import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import moment from "moment";
 import { useSelector, useDispatch } from 'react-redux';
 import { ReportsRealmContext } from '../../store/reports/models/index';
+import { useTranslation } from "react-i18next";
 
 import { doReportsGetMinYear } from '../../store/reports/reports.effects';
 
@@ -19,6 +20,8 @@ const YearForm = (props) => {
 
     const dispatch = useDispatch();
     const realm = useRealm();
+
+    const { t, i18n } = useTranslation();
 
     const [ yearPicked, setYearPicked ] = useState(year);
     

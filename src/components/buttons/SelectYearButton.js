@@ -2,11 +2,14 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from "react-i18next";
 
 import { THEME } from '../../theme';
 
 const SelectYearButton = (props) => {
     const { year, onPress } = props;
+
+    const { t, i18n } = useTranslation();
 
     const insets = useSafeAreaInsets();
 
@@ -16,7 +19,7 @@ const SelectYearButton = (props) => {
             style={styles.button}
             activeOpacity={0.7}
         >
-            <Text style={styles.text}>Año {year}</Text>
+            <Text style={styles.text}>{t('Year')} {year}</Text>
         </TouchableOpacity>
     )
 }

@@ -3,6 +3,8 @@ import { Dimensions, Text, View, StyleSheet, TouchableOpacity, Alert } from 'rea
 import { ContextMenuButton } from '../buttons/ContextMenuButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import { useTranslation } from "react-i18next";
 
 import { ReportsRealmContext } from '../../store/reports/models/index';
 import { doReportsDelete } from '../../store/reports/reports.effects';
@@ -14,6 +16,8 @@ export const MonthReportItem = (props) => {
 
     const dispatch = useDispatch();
     const realm = useRealm();
+
+    const { t, i18n } = useTranslation();
 
     const [item, setItem] = useState(null);
 
@@ -40,15 +44,15 @@ export const MonthReportItem = (props) => {
             setReportFromData(f);
             reportFormRef.current.open();
         } else if (action == 'delete') {
-            Alert.alert("Borrar elemento", "Seguro que quieres borrarlo?",
+            Alert.alert(i18n.t('Delete item'), i18n.t('Are you sure you want to delete it?'),
                 [
                     {
-                        text: "Cancelar",
+                        text: i18n.t('Cancel'),
                         onPress: () => console.log("Cancel Pressed"),
                         style: "cancel"
                     },
                     {
-                        text: "Sí",
+                        text: i18n.t('Yes'),
                         onPress: () => doReportsDelete(dispatch, realm, id)
                     }
                 ]

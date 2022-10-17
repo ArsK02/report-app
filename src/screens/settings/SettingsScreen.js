@@ -1,36 +1,48 @@
-import React from 'react';
+import { React, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
 import { THEME } from '../../theme';
 import { expo } from '../../../app.json';
+import { useTranslation } from "react-i18next";
+
+import LanguageForm from '../../components/language/LanguageForm';
 
 export const SettingsScreen = ({ navigation }) => {
+
+    const languageFormRef = useRef(null);
+    const { t, i18n } = useTranslation();
 
     const SettingsNavLink = ({ text, icon, screen, onPress }) => (
         <TouchableOpacity
             style={styles.navLink}
-            onPress={() => screen ? navigation.navigate(screen) : onPress}
+            onPress={() => {
+                if (!!screen) {
+                    navigation.navigate(screen)
+                } else {
+                    onPress();
+                }
+            }}
             activeOpacity={0.7}
         >
             <Icon name={icon} size={55} />
-            <Text style={styles.navLinkText}>{text}</Text>
+            <Text style={styles.navLinkText}>{t(text)}</Text>
         </TouchableOpacity>
     )
 
     return (
         <ScreenSafeAreaContainer tabsIndent style={styles.screenContainer}>
-            <Text style={styles.title}>Ajustes</Text>
+            <Text style={styles.title}>{t('Settings')}</Text>
 
             <View style={styles.buttonsGridContainer}>
                 <View style={styles.buttonsRow}>
-                    <SettingsNavLink text='Sincronización y backups' screen='BackupScreen' icon='cloud-upload-outline' />
-                    <SettingsNavLink text='Idiomas' icon='language-outline' />
+                    <SettingsNavLink text='Synchronization and backups' screen='BackupScreen' icon='cloud-upload-outline' />
+                    <SettingsNavLink text='Languages' icon='language-outline' onPress={() => languageFormRef?.current.open()} />
                 </View>
                 <View style={styles.buttonsRow}>
-                    <SettingsNavLink text='Aparencia' icon='color-palette-outline' />
-                    <SettingsNavLink text='Donaciones' screen='DonationScreen' icon='heart-outline' />
+                    <SettingsNavLink text='Appearance' icon='color-palette-outline' onPress={() => console.log('Aparencia')}/>
+                    <SettingsNavLink text='Donations' screen='DonationScreen' icon='heart-outline' />
                 </View>
             </View>
 
@@ -39,11 +51,12 @@ export const SettingsScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate('PrivacyPolicyScreen')}
                 activeOpacity={0.7}
                 >
-                    <Text style={styles.screenFooterText}>Politica de privacidad</Text>
+                    <Text style={styles.screenFooterText}>{t('Privacy Policy')}</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.screenFooterText}>{expo.version} ({Platform.OS === 'android' ? expo.android.versionCode : expo.ios.buildNumber})</Text>
             </View>
+            <LanguageForm ref={languageFormRef}/>
         </ScreenSafeAreaContainer>
     );
 }

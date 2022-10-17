@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Dimensions, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 
 
 export const MonthReportHeader = ({month}) => {
@@ -7,7 +8,7 @@ export const MonthReportHeader = ({month}) => {
         <View
             style={styles.container}
         >
-            <Text style={styles.text}>{month}</Text>
+            <Text style={styles.text}>{moment.months(month)}</Text>
         </View>
     )
 }

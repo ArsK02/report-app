@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import React, { useCallback, useEffect, useMemo, useRef, useState, useImperativeHandle, forwardRef } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFormik } from 'formik';
-import moment from 'moment/min/moment-with-locales';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReportsRealmContext } from '../../store/reports/models/index';
 import { doReportsGetAppData, doReportsCreate, doReportsEdit } from '../../store/reports/reports.effects';
@@ -13,13 +13,16 @@ import MainButton from '../buttons/MainButton';
 import StopWatchButton from '../buttons/StopWatchButton';
 import { THEME } from '../../theme';
 import { ReportSchema } from '../form-validation/validation';
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
+import { useTranslation } from "react-i18next";
 
 const { useRealm } = ReportsRealmContext;
 
 const ReportForm = forwardRef((props, ref) => {
     const dispatch = useDispatch();
     const realm = useRealm();
+
+    const { t, i18n } = useTranslation();
 
     const { reportData = null, addButton = true } = props;
 
@@ -67,8 +70,6 @@ const ReportForm = forwardRef((props, ref) => {
             }
         }
     });
-
-    // useEffect(() => setFormMode(), reportData);
 
     useEffect(() => {
         if (formMode == 'edit') {
@@ -133,7 +134,7 @@ const ReportForm = forwardRef((props, ref) => {
                 :
                 <TouchableOpacity onPress={() => setOpenPicker(true)} style={[styles.reportFormItem, marginB && styles.reportFormItemMargin]} activeOpacity={0.7}>
                     <Icon name='calendar-outline' size={24} color={THEME.CONTRAST_COLOR} />
-                    <Text style={[styles.reportFormItemText, styles.reportFormItemTextGrow]}>Día</Text>
+                    <Text style={[styles.reportFormItemText, styles.reportFormItemTextGrow]}>{i18n.t('Day')}</Text>
                     <Text style={{ fontSize: 18, lineHeight: 22 }}>{value || ''}</Text>
                 </TouchableOpacity>
             }
@@ -158,23 +159,23 @@ const ReportForm = forwardRef((props, ref) => {
                         style={styles.reportTitleinput}
                         onChangeText={handleChange('title')}
                         value={values.title}
-                        placeholder='Añade el titulo...'
+                        placeholder={`${i18n.t('Add a title')}...`}
                     />
                     <ReportFormItem
                         date
                         onChange={handleChange('date')}
-                        value={values.date}
+                        value={moment(values.date).format("MMMM DD")}
                         marginB
                     />
                     <ReportFormItem
-                        text='Horas'
+                        text={i18n.t('Hours')}
                         icon='time-outline'
                         onChange={v => setFieldValue('hours', v)}
                         error={errors.hours}
                         value={values.hours}
                     />
                     <ReportFormItem
-                        text='Minutos'
+                        text={i18n.t('Minutes')}
                         icon='time-outline'
                         onChange={v => setFieldValue('minutes', v)}
                         error={errors.minutes}
@@ -183,14 +184,14 @@ const ReportForm = forwardRef((props, ref) => {
                         minutes
                     />
                     <ReportFormItem
-                        text='Publicaciones'
+                        text={i18n.t('Publications')}
                         icon='library-outline'
                         onChange={v => setFieldValue('publications', v)}
                         error={errors.publications}
                         value={values.publications}
                     />
                     <ReportFormItem
-                        text='Video'
+                        text={i18n.t('Videos')}
                         icon='play-outline'
                         onChange={v => setFieldValue('videos', v)}
                         error={errors.videos}
@@ -198,14 +199,14 @@ const ReportForm = forwardRef((props, ref) => {
                         marginB
                     />
                     <ReportFormItem
-                        text='Revisitas'
+                        text={i18n.t('Return Visits')}
                         icon='chatbubbles-outline'
                         onChange={v => setFieldValue('returnVisits', v)}
                         error={errors.returnVisits}
                         value={values.returnVisits}
                     />
                     <ReportFormItem
-                        text='Cursos biblicos'
+                        text={i18n.t('Bible Studies')}
                         icon='people-outline'
                         onChange={v => setFieldValue('bibleStudies', v)}
                         error={errors.bibleStudies}
@@ -220,6 +221,7 @@ const ReportForm = forwardRef((props, ref) => {
             </BottomSheetModalComp>
             <DatePicker
                 modal
+                locale={i18n.language}
                 mode={"date"}
                 open={openPicker}
                 date={datePicker}
@@ -231,6 +233,8 @@ const ReportForm = forwardRef((props, ref) => {
                 onCancel={() => {
                     setOpenPicker(false)
                 }}
+                confirmText={i18n.t('Confirm')}
+                cancelText={i18n.t('Cancel')}
             />
         </>
     )
