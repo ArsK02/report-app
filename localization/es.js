@@ -5,7 +5,7 @@ export default {
         'ru': 'Ruso',
         
         'Welcome': "Bienvenido",
-        'Year': 'Year',
+        'Year': 'Año',
 
         'Day': 'Día',
         'Confirm': 'Confirmar',
