@@ -72,6 +72,10 @@ const ReportForm = forwardRef((props, ref) => {
     });
 
     useEffect(() => {
+        setFieldsReportData();
+    }, [formMode, reportData])
+
+    const setFieldsReportData = () => {
         if (formMode == 'edit') {
             setFieldValue('title', reportData.title);
             setFieldValue('date', new Date(reportData.date).toISOString());
@@ -80,8 +84,17 @@ const ReportForm = forwardRef((props, ref) => {
             setFieldValue('publications', reportData.publications);
             setFieldValue('returnVisits', reportData.returnVisits);
             setFieldValue('bibleStudies', reportData.bibleStudies);
+        } else {
+            ReportSchema.fields.date.max(new Date());
+            setFieldValue('title', 0);
+            setFieldValue('date', new Date().toISOString());
+            setFieldValue('hours', 0);
+            setFieldValue('minutes', 0);
+            setFieldValue('publications', 0);
+            setFieldValue('returnVisits', 0);
+            setFieldValue('bibleStudies', 0);
         }
-    }, [formMode, reportData])
+    }
 
 
     useEffect(() => {
@@ -95,14 +108,10 @@ const ReportForm = forwardRef((props, ref) => {
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useMemo(() => ['85%'], []);
 
-    const handlePresentModalPress = useCallback(() => {
-        ReportSchema.fields.date.max(new Date())
-        setFieldValue('date', new Date().toISOString());
-        bottomSheetModalRef.current?.present();
-        
-    }, []);
+    const handlePresentModalPress = useCallback(() => open(), []);
 
     const open = () => {
+        setFieldsReportData()
         bottomSheetModalRef.current?.present();
     }
 
