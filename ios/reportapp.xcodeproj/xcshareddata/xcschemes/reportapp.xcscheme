@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "reportapp.app"
-               BlueprintName = "reportapp"
-               ReferencedContainer = "container:reportapp.xcodeproj">
+               BuildableName = "ReportApp.app"
+               BlueprintName = "ReportApp"
+               ReferencedContainer = "container:ReportApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "reportappTests.xctest"
-               BlueprintName = "reportappTests"
-               ReferencedContainer = "container:reportapp.xcodeproj">
+               BuildableName = "ReportAppTests.xctest"
+               BlueprintName = "ReportAppTests"
+               ReferencedContainer = "container:ReportApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "reportapp.app"
-            BlueprintName = "reportapp"
-            ReferencedContainer = "container:reportapp.xcodeproj">
+            BuildableName = "ReportApp.app"
+            BlueprintName = "ReportApp"
+            ReferencedContainer = "container:ReportApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "reportapp.app"
-            BlueprintName = "reportapp"
-            ReferencedContainer = "container:reportapp.xcodeproj">
+            BuildableName = "ReportApp.app"
+            BlueprintName = "ReportApp"
+            ReferencedContainer = "container:ReportApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

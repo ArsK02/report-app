@@ -3,14 +3,15 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { THEME } from '../../theme';
 
-const MainButton = ({ icon, onPress }) => {
+const MainButton = ({ icon, onPress, text, style }) => {
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={styles.button}
+            style={[styles.button, style]}
             activeOpacity={0.7}
         >
-            <Icon name={icon || 'checkmark'} size={38} color={THEME.ACCENT_COLOR} />
+            {!!icon && <Icon name={icon} size={38} color={THEME.ACCENT_COLOR} />}
+            {!!text && <Text style={styles.text}>{text}</Text>}
         </TouchableOpacity>
     )
 }
@@ -25,5 +26,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 8,
         backgroundColor: THEME.SECONDARY_BACKGROUND_COLOR,
+    },
+    text: {
+        fontSize: 18,
     },
 })

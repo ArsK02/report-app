@@ -216,7 +216,7 @@ const ReportForm = forwardRef((props, ref) => {
                 </View>
                 <View style={styles.sheetButtonsContainer}>
                     {formMode == 'create' ? <StopWatchButton buttonStyle={styles.stopWatchButton} /> : <></>}
-                    <MainButton onPress={handleSubmit}/>
+                    <MainButton icon='checkmark' onPress={handleSubmit}/>
                 </View>
             </BottomSheetModalComp>
             <DatePicker
