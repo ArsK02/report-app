@@ -11,7 +11,7 @@ const AddReportButton = ({ onPress }) => {
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={[styles.button, { bottom: insets.bottom + 70 }]}
+            style={[styles.button, { bottom: insets.bottom + (Platform.OS === 'android' ? 100 : 70) }]}
             activeOpacity={0.7}
         >
             <Icon name='add' size={42} color={THEME.BACKGROUND_COLOR} />

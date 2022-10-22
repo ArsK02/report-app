@@ -32,7 +32,7 @@ const ReportForm = forwardRef((props, ref) => {
 
     const reportsCreateData = useSelector(state => state.reports.reportsCreateData);
     const reportsCreateLoading = useSelector(state => state.reports.reportsCreateLoading);
-    const reportsCreateLoaded = useSelector(state => state.reports.reportsCreateLoaded); 
+    const reportsCreateLoaded = useSelector(state => state.reports.reportsCreateLoaded);
 
     const reportsEditData = useSelector(state => state.reports.reportsEditData);
     const reportsEditLoading = useSelector(state => state.reports.reportsEditLoading);
@@ -58,10 +58,11 @@ const ReportForm = forwardRef((props, ref) => {
             publications: 0,
             videos: 0,
             returnVisits: 0,
-            bibleStudies: 0 },
+            bibleStudies: 0
+        },
         onSubmit: values => {
             if (formMode == 'edit') {
-                doReportsEdit(dispatch, realm, {id: reportData._id, value: values});
+                doReportsEdit(dispatch, realm, { id: reportData._id, value: values });
             } else {
                 const now = new Date();
                 if (now.getTime() >= new Date(values.date).getTime()) {
@@ -132,11 +133,11 @@ const ReportForm = forwardRef((props, ref) => {
                     <Icon name={icon || 'help-outline'} size={24} color={THEME.CONTRAST_COLOR} />
                     <Text style={[styles.reportFormItemText, styles.reportFormItemTextGrow]}>{text || ''}</Text>
 
-                    <TouchableOpacity onPress={() => onChange(minutes ? value-5 : value-1)} activeOpacity={0.7} disabled={!value}>
+                    <TouchableOpacity onPress={() => onChange(minutes ? value - 5 : value - 1)} activeOpacity={0.7} disabled={!value}>
                         <Icon name='remove' size={26} color={!value ? THEME.SECONDARY_TEXT_COLOR : THEME.CONTRAST_COLOR} />
                     </TouchableOpacity>
                     <Text style={[styles.reportFormItemText, styles.reportFormItemTextMarginH]}>{value || '0'}</Text>
-                    <TouchableOpacity onPress={() => onChange(minutes ? value+5 : value+1)} activeOpacity={0.7} >
+                    <TouchableOpacity onPress={() => onChange(minutes ? value + 5 : value + 1)} activeOpacity={0.7} >
                         <Icon name='add' size={26} />
                     </TouchableOpacity>
                 </View>
@@ -152,12 +153,8 @@ const ReportForm = forwardRef((props, ref) => {
 
     return (
         <>
-            {addButton == true ?
-            <AddReportButton onPress={handlePresentModalPress} />
-            : <></>
-            }
-            
-            
+            {addButton && <AddReportButton onPress={handlePresentModalPress} />}
+
             <BottomSheetModalComp
                 innerRef={bottomSheetModalRef}
                 snapPoints={snapPoints}
@@ -225,7 +222,7 @@ const ReportForm = forwardRef((props, ref) => {
                 </View>
                 <View style={styles.sheetButtonsContainer}>
                     {formMode == 'create' ? <StopWatchButton buttonStyle={styles.stopWatchButton} /> : <></>}
-                    <MainButton icon='checkmark' onPress={handleSubmit}/>
+                    <MainButton icon='checkmark' onPress={handleSubmit} />
                 </View>
             </BottomSheetModalComp>
             <DatePicker
