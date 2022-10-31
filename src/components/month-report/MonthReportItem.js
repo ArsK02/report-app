@@ -4,18 +4,13 @@ import { ContextMenuButton } from '../buttons/ContextMenuButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { useTranslation } from "react-i18next";
-
-import { ReportsRealmContext } from '../../store/reports/models/index';
+import { useTranslation } from "react-i18next"
 import { doReportsDelete } from '../../store/reports/reports.effects';
-
-const { useRealm } = ReportsRealmContext;
 
 export const MonthReportItem = (props) => {
     const { id, reportFormRef, setReportFromData } = props;
 
     const dispatch = useDispatch();
-    const realm = useRealm();
 
     const { t, i18n } = useTranslation();
 
@@ -53,7 +48,7 @@ export const MonthReportItem = (props) => {
                     },
                     {
                         text: i18n.t('Yes'),
-                        onPress: () => doReportsDelete(dispatch, realm, id)
+                        onPress: () => doReportsDelete(dispatch, id)
                     }
                 ]
             )

@@ -2,22 +2,16 @@ import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react'
 import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ReportsRealmContext } from '../../store/reports/models/index';
-
 import { doReportsGetByMonth } from '../../store/reports/reports.effects';
 
 import { MonthReportHeader } from '../../components/month-report/MonthReportHeader';
 import { MonthReportItem } from '../../components/month-report/MonthReportItem';
 import ReportForm from '../../components/report-form/ReportForm';
 
-const { useRealm } = ReportsRealmContext;
-
-
 export const MonthReportScreen = ({ route, navigation }) => {
 
     const { year, month } = route.params;
     const dispatch = useDispatch();
-    const realm = useRealm();
 
     const reportFormRef = useRef(null);
     const [reportFormDataEdit, setReportFromDataEdit] = useState(null);
@@ -35,7 +29,7 @@ export const MonthReportScreen = ({ route, navigation }) => {
     const reportsDeleteLoaded = useSelector(state => state.reports.reportsDeleteLoaded);
 
     useEffect(() => {
-        doReportsGetByMonth(dispatch, realm, { year: year, month: month});
+        doReportsGetByMonth(dispatch, { year: year, month: month});
     }, []);
 
     useEffect(() => {
@@ -46,7 +40,7 @@ export const MonthReportScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         if (reportsEditLoaded || reportsDeleteLoaded) {
-            doReportsGetByMonth(dispatch, realm, { year: year, month: month});
+            doReportsGetByMonth(dispatch, { year: year, month: month});
         }
     }, [reportsEditLoaded, reportsDeleteLoaded])
     // doReportsCreate(dispatch, realm, 'title');

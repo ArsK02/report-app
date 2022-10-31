@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Button } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState, useImperativeHandle, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { ReportsRealmContext } from '../../store/reports/models/index';
 import { BottomSheetModalComp } from '../BottomSheetModalComp';
 import MainButton from '../buttons/MainButton';
 import { THEME } from '../../theme';
@@ -9,11 +8,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useTranslation } from "react-i18next";
 
 
-const { useRealm } = ReportsRealmContext;
-
 const LanguageForm = forwardRef((props, ref) => {
-    const dispatch = useDispatch();
-    const realm = useRealm();
+    const dispatch = useDispatch()
 
     const {t, i18n} = useTranslation();
 

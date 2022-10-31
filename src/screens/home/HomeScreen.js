@@ -1,8 +1,6 @@
 import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
-
-import { ReportsRealmContext } from '../../store/reports/models/index';
 import ScreenSafeAreaContainer from '../../components/ScreenSafeAreaContainer';
 import { THEME } from '../../theme';
 import { doReportsGetAppData, doReportsCreate } from '../../store/reports/reports.effects';
@@ -12,12 +10,8 @@ import ReportForm from '../../components/report-form/ReportForm';
 
 import { MonthSlider } from '../../components/month-slider/MonthSlider';
 
-
-const { useRealm } = ReportsRealmContext;
-
 export const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
-    const realm = useRealm();
     // console.log(+moment.utc());
     // doReportsCreate(dispatch, realm, 'title');
     // doReportsGetAppData(dispatch, realm, {test: 1});

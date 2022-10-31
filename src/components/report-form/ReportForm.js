@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useFormik } from 'formik';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReportsRealmContext } from '../../store/reports/models/index';
 import { doReportsGetAppData, doReportsCreate, doReportsEdit } from '../../store/reports/reports.effects';
 
 import { BottomSheetModalComp } from '../BottomSheetModalComp';
@@ -16,11 +15,8 @@ import { ReportSchema } from '../form-validation/validation';
 import DatePicker from 'react-native-date-picker';
 import { useTranslation } from "react-i18next";
 
-const { useRealm } = ReportsRealmContext;
-
 const ReportForm = forwardRef((props, ref) => {
     const dispatch = useDispatch();
-    const realm = useRealm();
 
     const { t, i18n } = useTranslation();
 
@@ -62,11 +58,11 @@ const ReportForm = forwardRef((props, ref) => {
         },
         onSubmit: values => {
             if (formMode == 'edit') {
-                doReportsEdit(dispatch, realm, { id: reportData._id, value: values });
+                doReportsEdit(dispatch, { id: reportData._id, value: values });
             } else {
                 const now = new Date();
                 if (now.getTime() >= new Date(values.date).getTime()) {
-                    doReportsCreate(dispatch, realm, values);
+                    doReportsCreate(dispatch, values);
                 }
             }
         }

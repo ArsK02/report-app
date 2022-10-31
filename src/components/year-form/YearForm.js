@@ -6,20 +6,16 @@ import MainButton from '../buttons/MainButton';
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import moment from "moment";
 import { useSelector, useDispatch } from 'react-redux';
-import { ReportsRealmContext } from '../../store/reports/models/index';
 import { useTranslation } from "react-i18next";
 
 import { doReportsGetMinYear } from '../../store/reports/reports.effects';
 
 const MONTHS = [2022, 2021, '2020', '2019', '2018', '2017'];
 
-const { useRealm } = ReportsRealmContext;
-
 const YearForm = (props) => {
     const { year, setYear } = props;
 
     const dispatch = useDispatch();
-    const realm = useRealm();
 
     const { t, i18n } = useTranslation();
 
@@ -46,11 +42,11 @@ const YearForm = (props) => {
     }
 
     useEffect(() => {
-        doReportsGetMinYear(dispatch, realm);
+        doReportsGetMinYear(dispatch);
     }, []);
 
     useEffect(() => {
-        doReportsGetMinYear(dispatch, realm);
+        doReportsGetMinYear(dispatch);
     }, [reportsCreateLoaded]);
 
     useEffect(() => {

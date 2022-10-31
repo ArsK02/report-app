@@ -7,16 +7,11 @@ import { getMonthData } from './mock/data';
 import YearForm from '../year-form/YearForm';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ReportsRealmContext } from '../../store/reports/models/index';
-
 import { doReportsGetStatsByYear } from '../../store/reports/reports.effects';
-
-const { useRealm } = ReportsRealmContext;
 
 
 export const MonthSlider = ({ navigation }) => {
     const dispatch = useDispatch();
-    const realm = useRealm();
 
     const width = Dimensions.get('window').width;
     const data = getMonthData();
@@ -46,14 +41,14 @@ export const MonthSlider = ({ navigation }) => {
 
     // console.log(data);
     useEffect(() => {
-        doReportsGetStatsByYear(dispatch, realm, year);
+        doReportsGetStatsByYear(dispatch, year);
         setMonths(getMonths(year));
         setDefaultIndex(getMonths(year).length - 1)
     }, [year]);
 
     useEffect(() => {
         if (reportsCreateLoaded || reportsEditLoaded || reportsDeleteLoaded) {
-            doReportsGetStatsByYear(dispatch, realm, year);
+            doReportsGetStatsByYear(dispatch, year);
         }
     }, [reportsCreateLoaded, reportsEditLoaded, reportsDeleteLoaded])
     
